@@ -46,7 +46,7 @@ namespace AlgorithmsDataStructures
             List<Node> nodes = new List<Node>();
             Node node = head;
             
-            while (node.next != null)
+            while (node.next != null || node == null)
             {
                 if (node.value == _value) nodes.Add(node);
                 node = node.next;
@@ -57,7 +57,7 @@ namespace AlgorithmsDataStructures
         public bool Remove(int _value)
         {
             Node node = head;
-            while (node.next != null)
+            while (node.next != null || node == null)
             {
                 if (node.next.value == _value)
                 {
@@ -72,7 +72,7 @@ namespace AlgorithmsDataStructures
         public void RemoveAll(int _value)
         {
             Node node = head;
-            while (node.next != null)
+            while (node.next != null || node == null)
             {
                 if (node.next.value == _value) node.next = node.next.next;
                 node = node.next;
@@ -113,7 +113,7 @@ namespace AlgorithmsDataStructures
             }
             else
             {
-                while (node.next != null)
+                while (node.next != null || node == null)
                 {
                     if (node == _nodeAfter)
                     {
