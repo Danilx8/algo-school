@@ -46,10 +46,13 @@ namespace AlgorithmsDataStructures
             List<Node> nodes = new List<Node>();
             Node node = head;
             
-            while (node.next != null || node != null)
+            if (node != null)
             {
-                if (node.value == _value) nodes.Add(node);
-                node = node.next;
+                while (node.next != null)
+                {
+                    if (node.value == _value) nodes.Add(node);
+                    node = node.next;
+                }
             }
             return nodes;
         }
@@ -57,14 +60,17 @@ namespace AlgorithmsDataStructures
         public bool Remove(int _value)
         {
             Node node = head;
-            while (node.next != null || node != null)
+            if (node != null)
             {
-                if (node.next.value == _value)
+                while (node.next != null)
                 {
-                    node.next = node.next.next;
-                    return true;
+                    if (node.next.value == _value)
+                    {
+                        node.next = node.next.next;
+                        return true;
+                    }
+                    node = node.next;
                 }
-                node = node.next;
             }
             return false;
         }
@@ -72,10 +78,13 @@ namespace AlgorithmsDataStructures
         public void RemoveAll(int _value)
         {
             Node node = head;
-            while (node.next != null || node != null)
+            if (node != null)
             {
-                if (node.next.value == _value) node.next = node.next.next;
-                node = node.next;
+                while (node.next != null || node != null)
+                {
+                    if (node.next.value == _value) node.next = node.next.next;
+                    node = node.next;
+                }
             }
         }
 
@@ -111,9 +120,9 @@ namespace AlgorithmsDataStructures
                 tail.next = _nodeToInsert;
                 tail = _nodeToInsert;
             }
-            else
+            else if (node != null)
             {
-                while (node.next != null || node != null)
+                while (node.next != null)
                 {
                     if (node == _nodeAfter)
                     {
