@@ -52,7 +52,7 @@ namespace AlgorithmsDataStructures
                     node = node.next;
                 }
 
-            if (tail.value == _value) nodes.Add(tail);
+            
             return nodes;
         }
 
