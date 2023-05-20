@@ -48,12 +48,15 @@ namespace AlgorithmsDataStructures
             
             if (node != null)
             {
+                if (node.value == _value) nodes.Add(node);
                 while (node.next != null)
                 {
                     if (node.value == _value) nodes.Add(node);
                     node = node.next;
                 }
             }
+
+            if (tail.value == _value) nodes.Add(tail);
             return nodes;
         }
 
