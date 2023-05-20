@@ -46,15 +46,11 @@ namespace AlgorithmsDataStructures
             List<Node> nodes = new List<Node>();
             Node node = head;
             
-            if (node != null)
-            {
-                if (node.value == _value) nodes.Add(node);
-                while (node.next != null)
+                while (node != null )
                 {
                     if (node.value == _value) nodes.Add(node);
                     node = node.next;
                 }
-            }
 
             if (tail.value == _value) nodes.Add(tail);
             return nodes;
