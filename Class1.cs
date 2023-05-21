@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Security.Policy;
 
 namespace AlgorithmsDataStructures
 {
@@ -45,67 +44,89 @@ namespace AlgorithmsDataStructures
         {
             List<Node> nodes = new List<Node>();
             Node node = head;
-            
-                while (node != null )
-                {
-                    if (node.value == _value) nodes.Add(node);
-                    node = node.next;
-                }
-
-            
+            while (node != null)
+            {
+                if (node. value == _value) nodes.Add(node);
+                node = node.next;
+            }
             return nodes;
         }
 
         public bool Remove(int _value)
         {
-            Node node = head;
-            if (node != null)
+            if (head == null) return false;
+
+            if (head.value == _value)
             {
-                while (node.next != null)
-                {
-                    if (node.next.value == _value)
-                    {
-                        node.next = node.next.next;
-                        return true;
-                    }
-                    node = node.next;
-                }
+                head = head.next;
+                return true;
             }
-            return false;
+
+            if (tail.value == _value)
+            {
+                Node subNode = head;
+                while (subNode.next != null) subNode = subNode.next;
+                subNode.next = null;
+                tail = subNode;
+                return true;
+            }
+
+            Node first = head;
+            Node second = head.next;
+            while (second != null && second.value != _value)
+            {
+                second = second.next;
+                first = first.next;
+            }
+            if (second == null) return false;
+            first.next = second.next;
+            return true;
         }
 
         public void RemoveAll(int _value)
         {
             Node node = head;
-            if (node != null)
+            Node before = null;
+
+            while (node != null && node.value == _value)
             {
-                while (node.next != null || node != null)
+                head = head.next;
+                node = head;
+                if (head == null) tail = null;
+            }
+
+            while (node != null)
+            {
+                while (node != null && node.value != _value)
                 {
-                    if (node.next.value == _value) node.next = node.next.next;
+                    before = node;
                     node = node.next;
                 }
+
+                if (node == null) break;
+
+                before.next = node.next;
+                node = before.next;
+                if (before.next == null) tail = before;
             }
         }
 
         public void Clear()
         {
+            Node node = head;
+            while (node != null) node.next = null;
             head = null;
             tail = null;
         }
 
         public int Count()
         {
-            Node node = head;
             int count = 0;
-
-            if (node != null)
+            Node node = head;
+            while (node != null)
             {
                 ++count;
-                while (node.next != null)
-                {
-                    ++count;
-                    node = node.next;
-                }
+                node = node.next;
             }
             return count; 
         }
@@ -125,7 +146,7 @@ namespace AlgorithmsDataStructures
                 {
                     if (node == _nodeAfter)
                     {
-                        _nodeToInsert.next = node.next.next;
+                        _nodeToInsert.next = node.next;
                         node.next = _nodeToInsert;
                         break;
                     }
