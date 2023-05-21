@@ -117,13 +117,14 @@ namespace AlgorithmsDataStructures
         {
             Node current = head;
             Node pointer = head.next;
-            head = null;
             while (pointer != null)
             {
                 current.next = null;
                 current = pointer;
                 pointer = pointer.next;
             }
+            head = null;
+            tail = null;
         }
 
         public int Count()
