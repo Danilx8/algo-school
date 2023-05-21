@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlgorithmsDataStructures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,11 @@ namespace linked_list
     {
         static void Main(string[] args)
         {
+            LinkedList identicalList = new LinkedList();
+            Node node = new Node(0);
+            identicalList.InsertAfter(null, node);
+            Console.ReadKey();
         }
     }
 }
+
