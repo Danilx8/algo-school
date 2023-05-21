@@ -145,8 +145,14 @@ namespace AlgorithmsDataStructures
 
             if (tail == _nodeAfter)
             {
-                tail.next = _nodeToInsert;
-                tail = _nodeToInsert;
+                if (head == null)
+                {
+                    this.AddInTail(_nodeToInsert);
+                } else
+                {
+                    tail.next = _nodeToInsert;
+                    tail = _nodeToInsert;
+                }
             }
             else if (node != null)
             {
