@@ -46,7 +46,7 @@ namespace AlgorithmsDataStructures
             Node node = head;
             while (node != null)
             {
-                if (node. value == _value) nodes.Add(node);
+                if (node.value == _value) nodes.Add(node);
                 node = node.next;
             }
             return nodes;
@@ -59,15 +59,6 @@ namespace AlgorithmsDataStructures
             if (head.value == _value)
             {
                 head = head.next;
-                return true;
-            }
-
-            if (tail.value == _value)
-            {
-                Node subNode = head;
-                while (subNode.next != null) subNode = subNode.next;
-                subNode.next = null;
-                tail = subNode;
                 return true;
             }
 
@@ -113,10 +104,15 @@ namespace AlgorithmsDataStructures
 
         public void Clear()
         {
-            Node node = head;
-            while (node != null) node.next = null;
+            Node current = head;
+            Node pointer = head.next;
             head = null;
-            tail = null;
+            while (pointer != null)
+            {
+                current.next = null;
+                current = pointer;
+                pointer = pointer.next;
+            }
         }
 
         public int Count()
