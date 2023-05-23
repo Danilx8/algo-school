@@ -46,19 +46,43 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        [DataRow(1, 2, 3, 4, 5)]
+        [DataRow(new int[] { 0, 2, 3, 4, 5 })]
         public void SingleFindFalse(int[] numbers)
         {
             bool flag = false;
             for (int i = 0; i < numbers.Length; ++i)
             {
-                if (singleElementList.Find(i) != null)
+                if (singleElementList.Find(numbers[i]) != null)
                 {
                     flag = true;
                     break;
                 }
             }
-                Assert.AreEqual(flag, false);
+            Assert.AreEqual(flag, false);
+        }
+
+        [TestMethod]
+        [DataRow(1)]
+        public void IdenticalFindTrue(int number)
+        {
+            identicalElementsList.Clear();
+            Assert.IsNull(identicalElementsList.Find(number));
+        }
+
+        [TestMethod]
+        public void SingleInsert()
+        {
+            Node afterNode = singleElementList.Find(1);
+            Node node = new Node(2);
+            singleElementList.Remove(1);
+            singleElementList.InsertAfter(afterNode, node);
+            Assert.IsNotNull(singleElementList.Find(2));
+        }
+
+        [TestMethod]
+        public void Insert()
+        {
+
         }
     }
 }
