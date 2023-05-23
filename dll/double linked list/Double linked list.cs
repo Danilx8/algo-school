@@ -46,46 +46,149 @@ namespace AlgorithmsDataStructures
 
         public Node Find(int _value)
         {
-            // здесь будет ваш код поиска
+            Node node = head;
+            while (node != null)
+            {
+                if (node.value == _value) return node;
+                node = node.next;
+            }
             return null;
         }
 
         public List<Node> FindAll(int _value)
         {
             List<Node> nodes = new List<Node>();
-            // здесь будет ваш код поиска всех узлов по заданному значению
+            Node node = head;
+            while (node != null)
+            {
+                if (node.value == _value) nodes.Add(node);
+                node = node.next;
+            }
             return nodes;
         }
 
         public bool Remove(int _value)
         {
-            // здесь будет ваш код удаления одного узла по заданному значению
-            return true; // если узел был удалён
+            if (head == null) return false;
+
+            if (head.value == _value)
+            {
+                if (head == tail) tail = tail.next;
+                head = head.next;
+                return true;
+            }
+
+            if (tail.value == _value)
+            {
+                Node subNode = head;
+                while (subNode.next.next != null) subNode = subNode.next;
+                subNode.next = null;
+                tail = subNode;
+                return true;
+            }
+
+            Node first = head;
+            Node second = head.next;
+            while (second != null && second.value != _value)
+            {
+                second = second.next;
+                first = first.next;
+            }
+            if (second == null) return false;
+            first.next = second.next;
+            second.next.prev = first.next;
+            return true;
         }
 
         public void RemoveAll(int _value)
         {
-            // здесь будет ваш код удаления всех узлов по заданному значению
+            Node node = head;
+
+            while (node != null && node.value == _value)
+            {
+                head = head.next;
+                head.prev = null;
+                node = head;
+                if (head == null) tail = null;
+            }
+
+            Node before = null;
+
+            while (node != null)
+            {
+                while (node != null && node.value != _value)
+                {
+                    before = node;
+                    node = node.next;
+                }
+
+                if (node == null) break;
+
+                before.next = node.next;
+                node = before.next;
+                node.prev = before;
+                if (before.next == null) tail = before;
+            }
         }
 
         public void Clear()
         {
-            // здесь будет ваш код очистки всего списка
+            Node current = head;
+            Node pointer = head.next;
+            while (pointer != null)
+            {
+                current.next = null;
+                current.prev = null;
+                current = pointer;
+                pointer = pointer.next;
+            }
+            head = null;
+            tail = null;
         }
 
         public int Count()
         {
-            return 0; // здесь будет ваш код подсчёта количества элементов в списке
+            int count = 0;
+            Node node = head;
+            while (node != null)
+            {
+                ++count;
+                node = node.next;
+            }
+            return count;
         }
 
         public void InsertAfter(Node _nodeAfter, Node _nodeToInsert)
         {
-            // здесь будет ваш код вставки узла после заданного узла
+            Node node = head;
 
-            // если _nodeAfter = null
-            // добавьте новый элемент первым в списке 
-
+            if (tail == _nodeAfter)
+            {
+                if (head == null)
+                {
+                    this.AddInTail(_nodeToInsert);
+                }
+                else
+                {
+                    tail.next = _nodeToInsert;
+                    _nodeToInsert.prev = tail;
+                    tail = _nodeToInsert;
+                }
+            } else if (node != null)
+            {
+                while (node.next != null)
+                {
+                    if (node == _nodeAfter)
+                    {
+                        _nodeToInsert.next = node.next;
+                        _nodeToInsert.prev = node;
+                        node.next.prev = _nodeToInsert;
+                        node.next = _nodeToInsert;
+                        break;
+                    }
+                    node = node.next;
+                }
+            }
         }
-
     }
 }
