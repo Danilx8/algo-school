@@ -96,7 +96,7 @@ namespace AlgorithmsDataStructures
             }
             if (second == null) return false;
             first.next = second.next;
-            second.next.prev = first.next;
+            second.next.prev = first;
             return true;
         }
 

@@ -74,9 +74,38 @@ namespace AlgorithmsDataStructures
         {
             Node afterNode = singleElementList.Find(1);
             Node node = new Node(2);
-            singleElementList.Remove(1);
             singleElementList.InsertAfter(afterNode, node);
             Assert.IsNotNull(singleElementList.Find(2));
+        }
+
+        [TestMethod]
+        public void SingleRemove()
+        {
+            singleElementList.RemoveAll(1);
+            Assert.IsTrue(singleElementList.Count() == 0);
+        }
+
+        [TestMethod]
+        public void VariousRemove()
+        {
+            Assert.IsTrue(variousElementsList.Remove(9));
+        }
+
+        [TestMethod]
+        public void VariousRemoveAll()
+        {
+            variousElementsList.RemoveAll(2);
+            Assert.IsTrue(variousElementsList.Count() == 9);
+        }
+
+        [TestMethod]
+        public void VariousInsertInbetween()
+        {
+            Node node = variousElementsList.Find(2);
+            Node afterNode = new Node(12);
+            variousElementsList.InsertAfter(node, afterNode);
+            variousElementsList.Remove(12);
+            Assert.IsTrue(variousElementsList.Count() == 10);
         }
     }
 }
