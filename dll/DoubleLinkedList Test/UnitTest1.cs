@@ -78,11 +78,5 @@ namespace AlgorithmsDataStructures
             singleElementList.InsertAfter(afterNode, node);
             Assert.IsNotNull(singleElementList.Find(2));
         }
-
-        [TestMethod]
-        public void Insert()
-        {
-
-        }
     }
 }
