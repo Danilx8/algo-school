@@ -106,10 +106,10 @@ namespace AlgorithmsDataStructures
 
             while (node != null && node.value == _value)
             {
-                head.prev = null;
                 head = head.next;
-                node = head;
                 if (head == null) tail = null;
+                else head.prev = null;
+                node = head;
             }
 
             Node before = null;
@@ -125,9 +125,9 @@ namespace AlgorithmsDataStructures
                 if (node == null) break;
 
                 before.next = node.next;
-                node = before.next;
-                node.prev = before;
-                if (before.next == null) tail = before;
+                node = node.next;
+                if (node is null) tail = before;
+                else node.prev = before;
             }
         }
 

@@ -12,10 +12,10 @@ namespace AlgorithmsDataStructures
         [TestInitialize]
         public void TestInitialize()
         {
-            emptyList               = new LinkedList2();
-            singleElementList       = new LinkedList2();
-            identicalElementsList   = new LinkedList2();
-            variousElementsList     = new LinkedList2();
+            emptyList = new LinkedList2();
+            singleElementList = new LinkedList2();
+            identicalElementsList = new LinkedList2();
+            variousElementsList = new LinkedList2();
 
             Node singleNode = new Node(1);
             singleElementList.AddInTail(singleNode);
@@ -102,10 +102,19 @@ namespace AlgorithmsDataStructures
         public void VariousInsertInbetween()
         {
             Node node = variousElementsList.Find(2);
-            Node afterNode = new Node(12);
+            Node afterNode = new Node(2);
             variousElementsList.InsertAfter(node, afterNode);
+            for (int j = 0; j < 5; ++j)
+            {
+                Node newNode = new Node(6);
+                variousElementsList.AddInTail(newNode);
+            }
             variousElementsList.Remove(12);
-            Assert.IsTrue(variousElementsList.Count() == 10);
+            for (int i = 0; i < LENGTH; ++i)
+            {
+                variousElementsList.Remove(i);
+            }
+            Assert.IsTrue(variousElementsList.Count() == 6);
         }
     }
 }
