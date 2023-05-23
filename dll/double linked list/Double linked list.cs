@@ -75,6 +75,7 @@ namespace AlgorithmsDataStructures
             {
                 if (head == tail) tail = tail.next;
                 head = head.next;
+                if (!(head is null)) head.prev = null;
                 return true;
             }
 

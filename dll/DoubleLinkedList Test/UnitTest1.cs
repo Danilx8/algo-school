@@ -109,11 +109,12 @@ namespace AlgorithmsDataStructures
                 Node newNode = new Node(6);
                 variousElementsList.AddInTail(newNode);
             }
-            variousElementsList.Remove(12);
-            for (int i = 0; i < LENGTH; ++i)
+            variousElementsList.RemoveAll(12);
+            for (int i = 0; i < LENGTH - 2; ++i)
             {
-                variousElementsList.Remove(i);
+                variousElementsList.RemoveAll(i);
             }
+            variousElementsList.Remove(9);
             Assert.IsTrue(variousElementsList.Count() == 6);
         }
     }
