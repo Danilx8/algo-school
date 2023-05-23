@@ -106,8 +106,8 @@ namespace AlgorithmsDataStructures
 
             while (node != null && node.value == _value)
             {
-                head = head.next;
                 head.prev = null;
+                head = head.next;
                 node = head;
                 if (head == null) tail = null;
             }
@@ -162,19 +162,14 @@ namespace AlgorithmsDataStructures
         {
             Node node = head;
 
-            if (tail == _nodeAfter)
+            if (_nodeAfter == null)
             {
-                if (head == null)
-                {
-                    this.AddInTail(_nodeToInsert);
-                }
-                else
-                {
-                    tail.next = _nodeToInsert;
-                    _nodeToInsert.prev = tail;
-                    tail = _nodeToInsert;
-                }
-            } else if (node != null)
+                _nodeToInsert.next = head;
+                head.prev = _nodeToInsert;
+                head = _nodeToInsert;
+            }
+            else if (tail == _nodeAfter) AddInTail(_nodeToInsert);
+            else if (node != null)
             {
                 while (node.next != null)
                 {
