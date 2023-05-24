@@ -165,8 +165,10 @@ namespace AlgorithmsDataStructures
 
             if (_nodeAfter == null)
             {
+                _nodeToInsert.prev = null;
                 _nodeToInsert.next = head;
-                head.prev = _nodeToInsert;
+                if (head != null) head.prev = _nodeToInsert;
+                else tail = _nodeToInsert;
                 head = _nodeToInsert;
             }
             else if (tail == _nodeAfter) AddInTail(_nodeToInsert);
