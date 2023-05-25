@@ -1,63 +1,192 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace AlgorithmsDataStructures
 {
-    public class DynArray<T>
+
+    public class Node
     {
-        const float SHRINK_FRACTION = 0.5F;
-        public T[] array;
-        public int count;
-        public int capacity;
+        public int value;
+        public Node next, prev;
 
-        public DynArray()
+        public Node(int _value)
         {
-            count = 0;
-            MakeArray(16);
+            value = _value;
+            next = null;
+            prev = null;
+        }
+    }
+
+    public class LinkedList2
+    {
+        public Node head;
+        public Node tail;
+
+        public LinkedList2()
+        {
+            head = null;
+            tail = null;
         }
 
-        public void MakeArray(int new_capacity)
+        public void AddInTail(Node _item)
         {
-            T[] newArray = new T[new_capacity];
-            int transferringCapacity = Math.Min(capacity, new_capacity);
-            if (!(array is null) && array != Array.Empty<T>()) Array.Copy(array, newArray, transferringCapacity);
-            capacity = new_capacity;
-            array = newArray;
-        }
-
-        public T GetItem(int index)
-        {
-            if (index < 0 || index >= count) throw new IndexOutOfRangeException("Index out of range.");
-            return array[index];
-        }
-
-        public void Append(T itm)
-        {
-            if (count + 1 > capacity) MakeArray(capacity * 2);
-            array[count++] = itm;
-        }
-
-        public void Insert(T itm, int index)
-        {
-            if (index < 0 || index > count) throw new IndexOutOfRangeException("Index out of range.");
-            if (++count > capacity) MakeArray(capacity * 2);
-
-            for (int i = index + 1; i < count; ++i)
+            if (head == null)
             {
-                array[i] = array[i - 1];
+                head = _item;
+                head.next = null;
+                head.prev = null;
             }
-            array[index] = itm;
+            else
+            {
+                tail.next = _item;
+                _item.prev = tail;
+            }
+            tail = _item;
         }
 
-        public void Remove(int index)
+        public Node Find(int _value)
         {
-            if (index < 0 || index >= count) throw new IndexOutOfRangeException("Index out of range.");
-            for (int i = index; i < count; ++i)
+            Node node = head;
+            while (node != null)
             {
-                array[i] = array[i + 1];
+                if (node.value == _value) return node;
+                node = node.next;
+            }
+            return null;
+        }
+
+        public List<Node> FindAll(int _value)
+        {
+            List<Node> nodes = new List<Node>();
+            Node node = head;
+            while (node != null)
+            {
+                if (node.value == _value) nodes.Add(node);
+                node = node.next;
+            }
+            return nodes;
+        }
+
+        public bool Remove(int _value)
+        {
+            if (head == null) return false;
+
+            if (head.value == _value)
+            {
+                if (head == tail) tail = tail.next;
+                head = head.next;
+                if (!(head is null)) head.prev = null;
+                return true;
             }
 
-            if (--count < SHRINK_FRACTION * capacity) MakeArray(Math.Max((int)(capacity / 3 * 2), 16));
+            if (tail.value == _value)
+            {
+                Node subNode = head;
+                while (subNode.next.next != null) subNode = subNode.next;
+                subNode.next = null;
+                tail = subNode;
+                return true;
+            }
+
+            Node first = head;
+            Node second = head.next;
+            while (second != null && second.value != _value)
+            {
+                second = second.next;
+                first = first.next;
+            }
+            if (second == null) return false;
+            first.next = second.next;
+            second.next.prev = first;
+            return true;
+        }
+
+        public void RemoveAll(int _value)
+        {
+            Node node = head;
+
+            while (node != null && node.value == _value)
+            {
+                head = head.next;
+                if (head == null) tail = null;
+                else head.prev = null;
+                node = head;
+            }
+
+            Node before = null;
+
+            while (node != null)
+            {
+                while (node != null && node.value != _value)
+                {
+                    before = node;
+                    node = node.next;
+                }
+
+                if (node == null) break;
+
+                before.next = node.next;
+                node = node.next;
+                if (node is null) tail = before;
+                else node.prev = before;
+            }
+        }
+
+        public void Clear()
+        {
+            Node current = head;
+            Node pointer = head.next;
+            while (pointer != null)
+            {
+                current.next = null;
+                current.prev = null;
+                current = pointer;
+                pointer = pointer.next;
+            }
+            head = null;
+            tail = null;
+        }
+
+        public int Count()
+        {
+            int count = 0;
+            Node node = head;
+            while (node != null)
+            {
+                ++count;
+                node = node.next;
+            }
+            return count;
+        }
+
+        public void InsertAfter(Node _nodeAfter, Node _nodeToInsert)
+        {
+            Node node = head;
+
+            if (_nodeAfter == null)
+            {
+                _nodeToInsert.prev = null;
+                _nodeToInsert.next = head;
+                if (head != null) head.prev = _nodeToInsert;
+                else tail = _nodeToInsert;
+                head = _nodeToInsert;
+            }
+            else if (tail == _nodeAfter) AddInTail(_nodeToInsert);
+            else if (node != null)
+            {
+                while (node.next != null)
+                {
+                    if (node == _nodeAfter)
+                    {
+                        _nodeToInsert.next = node.next;
+                        _nodeToInsert.prev = node;
+                        node.next.prev = _nodeToInsert;
+                        node.next = _nodeToInsert;
+                        break;
+                    }
+                    node = node.next;
+                }
+            }
         }
     }
 }
