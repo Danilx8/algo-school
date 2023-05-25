@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+ll/linked list/Program.cs
+
+dll/double linked list/Program.cs

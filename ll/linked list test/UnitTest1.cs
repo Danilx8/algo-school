@@ -123,5 +123,12 @@ namespace AlgorithmsDataStructures
             identicalList.RemoveAll(_value);
             Assert.AreEqual(identicalList.Count(), 0);
         }
+
+        [TestMethod]
+        public void SingleRemove()
+        {
+            oneElementList.Remove(1);
+            Assert.IsTrue(oneElementList.Count() == 0);
+        }
     }
 }
