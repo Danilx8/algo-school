@@ -30,7 +30,7 @@ namespace AlgorithmsDataStructures
             Node<T> node = head;
             int count = 0;
 
-            while(node != null)
+            while (node != null)
             {
                 ++count;
                 node = node.next;
@@ -40,21 +40,20 @@ namespace AlgorithmsDataStructures
 
         public T Pop()
         {
-            if (tail == null) return default(T); 
-            else if (tail == head)
+            if (tail == null) return default(T);
+
+            T value = tail.value;
+
+            if (tail == head)
             {
-                T value = tail.value;
                 head = null;
                 tail = null;
                 return value;
             }
-            else
-            {
-                T value = tail.value;
-                tail.prev.next = null;
-                tail = tail.prev;
-                return value;
-            }
+
+            tail.prev.next = null;
+            tail = tail.prev;
+            return value;
         }
 
         public void Push(T val)
@@ -77,8 +76,8 @@ namespace AlgorithmsDataStructures
 
         public T Peek()
         {
-            if (head == null) return default(T); 
-            else return tail.value;
+            if (head == null) return default(T);
+            return tail.value;
         }
     }
 
