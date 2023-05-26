@@ -42,9 +42,9 @@ namespace AlgorithmsDataStructures
             if (index < 0 || index > count) throw new IndexOutOfRangeException("Index out of range.");
             if (++count > capacity) MakeArray(capacity * 2);
 
-            for (int i = index + 1; i < count; ++i)
+            for (int i = count - 2; i >= index; --i)
             {
-                array[i] = array[i - 1];
+                array[i + 1] = array[i];
             }
             array[index] = itm;
         }
@@ -52,10 +52,11 @@ namespace AlgorithmsDataStructures
         public void Remove(int index)
         {
             if (index < 0 || index >= count) throw new IndexOutOfRangeException("Index out of range.");
-            for (int i = index; i < count; ++i)
+            for (int i = index; i < count - 1; ++i)
             {
                 array[i] = array[i + 1];
             }
+            array[count - 1] = default(T);
 
             if (--count < SHRINK_FRACTION * capacity) MakeArray(Math.Max((int)(capacity / 3 * 2), 16));
         }

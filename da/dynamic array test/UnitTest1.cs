@@ -30,7 +30,17 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        public void BigInsert()
+        public void BigInsertWithoutExtension()
+        {
+            int newValue = 12;
+            bigArray.Remove(3);
+            bigArray.Insert(newValue, 3);
+            CollectionAssert.AreEqual(new int[] { 16, 16, 12 },
+                new int[] { bigArray.capacity, bigArray.count, bigArray.GetItem(3) });
+        }
+
+        [TestMethod]
+        public void BigInsertWithExtension()
         {
             int newValue = 12;
             bigArray.Insert(newValue, 0);
