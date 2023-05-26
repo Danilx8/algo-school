@@ -58,7 +58,7 @@ namespace AlgorithmsDataStructures
             }
             array[count - 1] = default(T);
 
-            if (--count < SHRINK_FRACTION * capacity) MakeArray(Math.Max((int)(capacity / 3 * 2), 16));
+            if (--count < SHRINK_FRACTION * capacity) MakeArray(Math.Max((int)(capacity / 1.5), 16));
         }
     }
 }

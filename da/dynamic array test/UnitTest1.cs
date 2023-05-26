@@ -76,8 +76,8 @@ namespace AlgorithmsDataStructures
             int deletedValue = 12;
             bigArray.Append(deletedValue);
             bigArray.Remove(16);
-            bigArray.Remove(0);
-            CollectionAssert.AreEqual(new int[] { 15, (int)(32 / 3 * 2), LENGTH - 1}, 
+            bigArray.Remove(15);
+            CollectionAssert.AreEqual(new int[] { 15, (int)(32 / 1.5), LENGTH - 1}, 
                 new int[] { bigArray.count, bigArray.capacity, bigArray.GetItem(14) });
         }
 
