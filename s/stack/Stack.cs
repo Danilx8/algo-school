@@ -33,6 +33,7 @@ namespace AlgorithmsDataStructures
             while(node != null)
             {
                 ++count;
+                node = node.next;
             }
             return count;
         }
@@ -76,8 +77,8 @@ namespace AlgorithmsDataStructures
 
         public T Peek()
         {
-            // ваш код
-            return default(T); // null, если стек пустой
+            if (head == null) return default(T); 
+            else return tail.value;
         }
     }
 
