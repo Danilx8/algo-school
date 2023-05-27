@@ -8,10 +8,10 @@ namespace AlgorithmsDataStructures
 {
     public class DummyNode : Node
     {
-        public DummyNode(Node anotherDummy) : base()
+        public DummyNode() : base()
         {
-            next = anotherDummy;
-            prev = anotherDummy;
+            next = null;
+            prev = null;
         }
     }
 
@@ -22,8 +22,10 @@ namespace AlgorithmsDataStructures
 
         public DummyLinkedList()
         {
-            head = new DummyNode(tail);
-            tail = new DummyNode(head);
+            head = new DummyNode();
+            tail = new DummyNode();
+            head.next = tail;
+            tail.prev = head;
         }
 
         public void AddInTail(Node _item)
@@ -97,8 +99,6 @@ namespace AlgorithmsDataStructures
         public void Clear()
         {
             head.next = tail;
-            head.prev = tail;
-            tail.next = head;
             tail.prev = head;
         }
 
