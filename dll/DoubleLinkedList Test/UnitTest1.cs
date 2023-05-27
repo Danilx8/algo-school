@@ -1,7 +1,7 @@
 namespace AlgorithmsDataStructures
 {
     [TestClass]
-    public class UnitTest1
+    public class LinkedListTest
     {
         LinkedList2 emptyList;
         LinkedList2 singleElementList;
@@ -12,10 +12,10 @@ namespace AlgorithmsDataStructures
         [TestInitialize]
         public void TestInitialize()
         {
-            emptyList = new LinkedList2();
-            singleElementList = new LinkedList2();
+            emptyList             = new LinkedList2();
+            singleElementList     = new LinkedList2();
             identicalElementsList = new LinkedList2();
-            variousElementsList = new LinkedList2();
+            variousElementsList   = new LinkedList2();
 
             Node singleNode = new Node(1);
             singleElementList.AddInTail(singleNode);
@@ -108,7 +108,7 @@ namespace AlgorithmsDataStructures
             {
                 Node newNode = new Node(6);
                 variousElementsList.AddInTail(newNode);
-            
+            }
             for (int i = 0; i < LENGTH; ++i)
             {
                 variousElementsList.RemoveAll(i);
@@ -119,5 +119,51 @@ namespace AlgorithmsDataStructures
             Assert.IsTrue(variousElementsList.Count() == 1);
         }
     }
-}
+
+    [TestClass]
+    public class DummyLinkedListTest
+    {
+        DummyLinkedList emptyList;
+        DummyLinkedList singleElementList;
+        DummyLinkedList identicalElementsList;
+        DummyLinkedList variousElementsList;
+
+        const int LENGTH = 10;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            emptyList             = new DummyLinkedList();
+            singleElementList     = new DummyLinkedList();
+            identicalElementsList = new DummyLinkedList();
+            variousElementsList   = new DummyLinkedList();
+
+            Node singleNode = new Node(1);
+            singleElementList.AddInTail(singleNode);
+
+            for (int i = 0; i < LENGTH; ++i)
+            {
+                Node node = new Node(1);
+                identicalElementsList.AddInTail(node);
+            }
+
+            for (int i = 0; i < LENGTH; ++i)
+            {
+                Node node = new Node(i);
+                variousElementsList.AddInTail(node);
+            }
+        }
+
+        [TestMethod]
+        public void AddInTailSingleCheck()
+        {
+            Assert.AreEqual(1, singleElementList.Count());
+        }
+
+        [TestMethod]
+        public void AddInTailBigCheck()
+        {
+            Assert.AreEqual(LENGTH, identicalElementsList.Count());
+        }
     }
+}
