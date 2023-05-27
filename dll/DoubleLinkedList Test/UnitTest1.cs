@@ -1,3 +1,5 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace AlgorithmsDataStructures
 {
     [TestClass]
@@ -163,7 +165,87 @@ namespace AlgorithmsDataStructures
         [TestMethod]
         public void AddInTailBigCheck()
         {
-            Assert.AreEqual(LENGTH, identicalElementsList.Count());
+            Assert.AreEqual(LENGTH, variousElementsList.Count());
+        }
+
+        [TestMethod]
+        public void EmptyFind()
+        {
+            Assert.IsNull(emptyList.Find(0));
+        }
+
+        [TestMethod]
+        public void BigFind()
+        {
+            for (int i = 0; i < LENGTH; ++i)
+            {
+                Assert.IsNotNull(identicalElementsList.Find(1));
+                Assert.IsNotNull(variousElementsList.Find(i));
+            }
+        }
+
+        [TestMethod]
+        public void IdenticalFindAll()
+        {
+            Assert.AreEqual(LENGTH, identicalElementsList.FindAll(1).Count);
+        }
+
+        [TestMethod]
+        public void EmptyFindAll()
+        {
+            Assert.AreEqual(0, emptyList.FindAll(0).Count);
+        }
+
+        [TestMethod]
+        public void VariousFindAll()
+        {
+            for (int i = 0; i < LENGTH; ++i)
+            {
+                Assert.AreEqual(1, variousElementsList.FindAll(i).Count);
+            }
+        }
+
+        [TestMethod]
+        public void IdenticalRemove()
+        {
+            identicalElementsList.Remove(1);
+            Assert.AreEqual(LENGTH - 1, identicalElementsList.Count());
+        }
+
+        [TestMethod]
+        public void IdenticalClear()
+        {
+            identicalElementsList.Clear();
+            Assert.AreEqual(0, identicalElementsList.Count());
+        }
+
+        [TestMethod]
+        public void IdenticalRemoveAll()
+        {
+            identicalElementsList.RemoveAll(1);
+            Assert.AreEqual(0, identicalElementsList.Count());
+        }
+
+        [TestMethod]
+        public void VariousRemoveAll()
+        {
+            for (int i = LENGTH - 1; i >= 0; --i)
+            {
+                variousElementsList.RemoveAll(i);
+                Assert.AreEqual(i, variousElementsList.Count()); 
+            }
+        }
+
+        [TestMethod]
+        public void VariousInsertAfter()
+        {
+            for (int i = 0; i < LENGTH; ++i)
+            {
+                Node newNode = new Node(LENGTH - i - 1);
+                Node afterNode = variousElementsList.Find(i);
+                variousElementsList.InsertAfter(afterNode, newNode);
+                Assert.AreEqual(LENGTH + i + 1, variousElementsList.Count());
+            }
         }
     }
 }
