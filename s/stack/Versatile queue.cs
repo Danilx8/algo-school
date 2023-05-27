@@ -34,6 +34,12 @@ namespace AlgorithmsDataStructures
             return array[index];
         }
 
+        public void Append(object itm)
+        {
+            if (count + 1 > capacity) MakeArray(capacity * 2);
+            array[count++] = itm;
+        }
+
         public void Insert(object itm, int index)
         {
             if (index < 0 || index > count) throw new IndexOutOfRangeException("Index out of range.");
@@ -60,8 +66,39 @@ namespace AlgorithmsDataStructures
     }
 
 
-    public class Versatile_stack
+    public class VersatileQueue
     {
+        int tailIndex;
+        VersatileDynArray objects;
 
+        public VersatileQueue()
+        {
+            tailIndex = 0;
+            objects   = new VersatileDynArray();
+        }
+
+        public int Size()
+        {
+            return tailIndex;
+        }
+
+        public object Pop()
+        {
+            --tailIndex;
+            object result = objects.GetItem(tailIndex);
+            objects.Remove(tailIndex);
+            return result;
+        }
+
+        public void Push(object val)
+        {
+            objects.Insert(val, 0);
+            ++tailIndex;
+        }
+
+        public object Peek()
+        {
+            return objects.GetItem(tailIndex);
+        }
     }
 }
