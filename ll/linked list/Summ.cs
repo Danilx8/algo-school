@@ -15,7 +15,7 @@ namespace AlgorithmsDataStructures
             LinkedList result = new LinkedList();
             Node firstNode = first.head;
             Node secondNode = second.head;
-            while(firstNode != null && secondNode != null)
+            while(firstNode != null)
             {
                 Node summNode = new Node(firstNode.value + secondNode.value);
                 result.AddInTail(summNode);
