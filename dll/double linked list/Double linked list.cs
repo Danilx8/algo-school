@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 namespace AlgorithmsDataStructures
 {
-
     public class Node
     {
         public int value;
         public Node next, prev;
+
+        public Node() { }
 
         public Node(int _value)
         {
