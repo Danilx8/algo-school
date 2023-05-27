@@ -77,6 +77,15 @@ namespace AlgorithmsDataStructures
         public void RemoveAll(int _value)
         {
             Node node = head.next;
+
+            while (node != tail && node.value == _value)
+            {
+                head.next = head.next.next;
+                if (head.next == tail) tail.prev = head;
+                else head.next.prev = null;
+                node = head.next;
+            }
+
             Node before = null;
 
             while (node != tail)
