@@ -1,9 +1,11 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace AlgorithmsDataStructures
 {
     [TestClass]
     public class UnitTest1
     {
-        private LinkedList emptyList = new LinkedList();
+        private LinkedList emptyList;
         private LinkedList oneElementList;
         private LinkedList bigList;
         private LinkedList identicalList;
@@ -17,6 +19,7 @@ namespace AlgorithmsDataStructures
         [TestInitialize]
         public void InitializeLists()
         {
+            emptyList       = new LinkedList();
             oneElementList  = new LinkedList();
             bigList         = new LinkedList();
             identicalList   = new LinkedList();
@@ -129,6 +132,48 @@ namespace AlgorithmsDataStructures
         {
             oneElementList.Remove(1);
             Assert.IsTrue(oneElementList.Count() == 0);
+        }
+
+        [TestMethod]
+        public void EmptySumm()
+        {
+            LinkedList list = LinkedList.Summ(emptyList, emptyList);
+            Assert.IsTrue(list.head == null && list.tail == null);
+        }
+
+        [TestMethod]
+        public void bigSumm()
+        {
+            LinkedList summList = new LinkedList();
+            for (int i = 0; i < length; ++i)
+            {
+                Node summNode = new Node(i + i);
+                summList.AddInTail(summNode);
+            }
+
+            bool equality = true;
+            Node firstNode = summList.head;
+
+            LinkedList funcList = LinkedList.Summ(bigList, bigList);
+
+            Node secondNode = funcList.head;
+            while (firstNode != null)
+            {
+                if (firstNode.value != secondNode.value) 
+                { 
+                    equality = false; 
+                    break; 
+                }
+                firstNode = firstNode.next;
+                secondNode = secondNode.next;
+            }
+            Assert.IsTrue(equality);
+        }
+
+        [TestMethod]
+        public void WrongLengthSumm()
+        {
+            Assert.IsNull(LinkedList.Summ(emptyList, oneElementList));
         }
     }
 }
