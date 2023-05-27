@@ -68,37 +68,33 @@ namespace AlgorithmsDataStructures
 
     public class VersatileQueue
     {
-        int tailIndex;
         VersatileDynArray objects;
 
         public VersatileQueue()
         {
-            tailIndex = 0;
             objects   = new VersatileDynArray();
         }
 
         public int Size()
         {
-            return tailIndex;
+            return objects.count;
         }
 
         public object Pop()
         {
-            --tailIndex;
-            object result = objects.GetItem(tailIndex);
-            objects.Remove(tailIndex);
+            object result = objects.GetItem(objects.count - 1);
+            objects.Remove(objects.count - 1);
             return result;
         }
 
         public void Push(object val)
         {
             objects.Insert(val, 0);
-            ++tailIndex;
         }
 
         public object Peek()
         {
-            return objects.GetItem(tailIndex);
+            return objects.GetItem(objects.count - 1);
         }
     }
 }
