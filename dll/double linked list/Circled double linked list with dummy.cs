@@ -29,7 +29,7 @@ namespace AlgorithmsDataStructures
         public Node Find(int _value)
         {
             Node node = edge.next;
-            while (node != edge)
+            while (!(node is DummyNode))
             {
                 if (node.value == _value) return node;
                 node = node.next;
@@ -41,7 +41,7 @@ namespace AlgorithmsDataStructures
         {
             List<Node> nodes = new List<Node>();
             Node node = edge.next;
-            while (node != edge)
+            while (!(node is DummyNode))
             {
                 if (node.value == _value) nodes.Add(node);
                 node = node.next;
@@ -53,12 +53,12 @@ namespace AlgorithmsDataStructures
         {
             Node first = edge;
             Node second = edge.next;
-            while (second != edge && second.value != _value)
+            while (!(second is DummyNode) && second.value != _value)
             {
                 second = second.next;
                 first = first.next;
             }
-            if (second == edge) return false;
+            if (second is DummyNode) return false;
             first.next = second.next;
             second.next.prev = first;
             return true;
@@ -68,29 +68,29 @@ namespace AlgorithmsDataStructures
         {
             Node node = edge.next;
 
-            while (node != edge && node.value == _value)
+            while (!(node is DummyNode) && node.value == _value)
             {
                 edge.next = edge.next.next;
-                if (edge.next == edge) edge.prev = edge;
+                if (edge.next is DummyNode) edge.prev = edge;
                 else edge.next.prev = edge;
                 node = edge.next;
             }
 
             Node before = null;
 
-            while (node != edge)
+            while (!(node is DummyNode))
             {
-                while (node != edge && node.value != _value)
+                while (!(node is DummyNode) && node.value != _value)
                 {
                     before = node;
                     node = node.next;
                 }
 
-                if (node == edge) break;
+                if (node is DummyNode) break;
 
                 before.next = node.next;
                 node = node.next;
-                if (node == edge) edge.prev = before;
+                if (node is DummyNode) edge.prev = before;
                 else node.prev = before;
             }
         }
@@ -126,9 +126,9 @@ namespace AlgorithmsDataStructures
                 edge.next = _nodeToInsert;
             }
             else if (_nodeAfter == edge.next) AddInTail(_nodeToInsert);
-            else if (node != edge)
+            else if (!(node is DummyNode))
             {
-                while (node.next != edge)
+                while (!(node.next is DummyNode))
                 {
                     if (node == _nodeAfter)
                     {

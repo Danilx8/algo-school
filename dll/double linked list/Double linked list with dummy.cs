@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AlgorithmsDataStructures
 {
@@ -39,7 +40,7 @@ namespace AlgorithmsDataStructures
         public Node Find(int _value)
         {
             Node node = head.next;
-            while (node != tail)
+            while (!(node is DummyNode))
             {
                 if (node.value == _value) return node; 
                 node = node.next;
@@ -51,7 +52,7 @@ namespace AlgorithmsDataStructures
         {
             List<Node> nodes = new List<Node>();
             Node node = head.next;
-            while (node != tail)
+            while (!(node is DummyNode))
             {
                 if (node.value == _value) nodes.Add(node);
                 node = node.next;
@@ -63,12 +64,12 @@ namespace AlgorithmsDataStructures
         {
             Node first = head;
             Node second = head.next;
-            while (second != tail && second.value != _value)
+            while (!(second is DummyNode) && second.value != _value)
             {
                 second = second.next;
                 first = first.next;
             }
-            if (second == tail) return false;
+            if (second is DummyNode) return false;
             first.next = second.next;
             second.next.prev = first;
             return true;
@@ -78,29 +79,29 @@ namespace AlgorithmsDataStructures
         {
             Node node = head.next;
 
-            while (node != tail && node.value == _value)
+            while (!(node is DummyNode) && node.value == _value)
             {
                 head.next = head.next.next;
-                if (head.next == tail) tail.prev = head;
+                if (head.next is DummyNode) tail.prev = head;
                 else head.next.prev = null;
                 node = head.next;
             }
 
             Node before = null;
 
-            while (node != tail)
+            while (!(node is DummyNode))
             {
-                while (node != tail && node.value != _value)
+                while (!(node is DummyNode) && node.value != _value)
                 {
                     before = node;
                     node = node.next;
                 }
 
-                if (node == tail) break;
+                if (node is DummyNode) break;
 
                 before.next = node.next;
                 node = node.next;
-                if (node == tail) tail.prev = before;
+                if (node is DummyNode) tail.prev = before;
                 else node.prev = before;
             }
         }
@@ -116,7 +117,7 @@ namespace AlgorithmsDataStructures
             Node node = head.next;
             int count = 0;
 
-            while (node != tail)
+            while (!(node is DummyNode))
             {
                 ++count;
                 node = node.next;
@@ -136,9 +137,9 @@ namespace AlgorithmsDataStructures
                 head.next = _nodeToInsert;
             }
             else if (_nodeAfter == tail.next) AddInTail(_nodeToInsert);
-            else if (node != tail)
+            else if (!(node is DummyNode))
             {
-                while (node.next != tail)
+                while (!(node.next is DummyNode))
                 {
                     if (node == _nodeAfter)
                     {
