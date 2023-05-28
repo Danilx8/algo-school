@@ -49,6 +49,26 @@ namespace AlgorithmsDataStructures
             Array.Reverse(ints);
             CollectionAssert.AreEqual(ints, new int[] { stack.Pop(), stack.Pop(), stack.Pop() });
         }
+
+        [TestMethod]
+        [DataRow("()")]
+        [DataRow("(())")]
+        [DataRow("(()())")]
+        [DataRow("(()((())()))")]
+        [DataRow("(()()(()))")]
+        public void BracketsTestTrue(string brackets)
+        {
+            Assert.IsTrue(Stack<char>.BalancedBrackets(brackets));
+        }
+
+        [TestMethod]
+        [DataRow("())(")]
+        [DataRow("))((")]
+        [DataRow("((())")]
+        public void BracketsTestFalse(string brackets)
+        {
+            Assert.IsFalse(Stack<char>.BalancedBrackets(brackets));
+        }
     }
 
     [TestClass]
@@ -101,6 +121,17 @@ namespace AlgorithmsDataStructures
             Assert.AreEqual("10", inclusiveQueue.Pop());
             Assert.AreEqual(10.0, inclusiveQueue.Pop());
             CollectionAssert.AreEqual(new int[] { 1, 2, 3, 4, 5 }, (int[])inclusiveQueue.Pop());
+        }
+    }
+
+    [TestClass]
+    public class CalculationsTest
+    {
+        [TestMethod]
+        [DataRow("1 2 + 3 * =")]
+        public void CalculationsMethodTest(string expression)
+        {
+            Assert.AreEqual(9, Stack<char>.StacksCalculations(expression));
         }
     }
 }

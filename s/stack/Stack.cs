@@ -14,7 +14,7 @@ namespace AlgorithmsDataStructures
         public Node(T _value) { value = _value; }
     }
 
-    public class Stack<T>
+    public partial class Stack<T>
     {
         public Node<T> head;
         public Node<T> tail;
