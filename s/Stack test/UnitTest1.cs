@@ -128,10 +128,10 @@ namespace AlgorithmsDataStructures
     public class CalculationsTest
     {
         [TestMethod]
-        [DataRow("1 2 + 3 * =")]
+        [DataRow("82 8 + 5 * 9 + =")]
         public void CalculationsMethodTest(string expression)
         {
-            Assert.AreEqual(9, Stack<char>.StacksCalculations(expression));
+            Assert.AreEqual(459, Stack<char>.StacksCalculations(expression));
         }
     }
 }
