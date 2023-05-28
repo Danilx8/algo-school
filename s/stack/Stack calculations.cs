@@ -42,21 +42,28 @@ namespace AlgorithmsDataStructures
 
                 if (currentObject is int) secondStack.Push((int)currentObject);
                 else if (currentElement == '=') return secondStack.Pop();
-                else if (currentElement == '+') secondStack.Push(secondStack.Pop() + secondStack.Pop());
-                else if (currentElement == '*') secondStack.Push(secondStack.Pop() * secondStack.Pop());
-                else if (currentElement == '-')
+                else
                 {
                     int secondNumber = secondStack.Pop();
                     int firstNumber = secondStack.Pop();
-                    secondStack.Push(firstNumber - secondNumber);
+                    switch (currentElement)
+                    {
+                        case '+':
+                            secondStack.Push(firstNumber + secondNumber);
+                            break;
+                        case '*':
+                            secondStack.Push(firstNumber * secondNumber);
+                            break;
+                        case '-':
+                            secondStack.Push(firstNumber - secondNumber);
+                            break;
+                        case '/':
+                            secondStack.Push(firstNumber / secondNumber);
+                            break;
+                        default:
+                            throw new ArgumentException("Wrong input expression");
+                    }
                 }
-                else if (currentElement == '/')
-                {
-                    int secondNumber = secondStack.Pop();
-                    int firstNumber = secondStack.Pop();
-                    secondStack.Push(firstNumber / secondNumber);
-                }
-                else throw new ArgumentException("Wrong input expression");
             }
             return 0;
         }
