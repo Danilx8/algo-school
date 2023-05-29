@@ -18,21 +18,32 @@ namespace AlgorithmsDataStructures
 
             for (int i = 0; i < 10; ++i)
             {
-                bigDeque.AddFront(i);
+                if (i % 2 == 0) bigDeque.AddFront(i);
+                else bigDeque.AddTail(i);
             }
         }
 
         [TestMethod]
-        public void emptyDequeSize()
+        public void EmptyDequeSize()
         {
             Assert.AreEqual(0, emptyDeque.Size());
         }
 
         [TestMethod]
-        public void singleAddDifference()
+        public void SingleAddDifference()
         {
             CollectionAssert.AreEqual(new int[] { 1, 1 }, 
                 new int[] { singleDeque.Size(), singleDeque.RemoveTail() });
+        }
+
+        [TestMethod]
+        public void DifferentAdditions()
+        {
+            emptyDeque.AddFront(12);
+            Deque<int> newEmptyDeque = new Deque<int>();
+
+            newEmptyDeque.AddTail(12);
+            Assert.AreEqual(emptyDeque.RemoveTail(), newEmptyDeque.RemoveFront());
         }
     }
 }

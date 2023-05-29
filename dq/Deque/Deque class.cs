@@ -47,7 +47,7 @@ namespace AlgorithmsDataStructures
         public void AddTail(T item)
         {
             Node<T> node = new Node<T>(item);
-
+            
             node.prev = edge.prev;
             edge.prev.next = node;
             edge.prev = node;
