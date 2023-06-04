@@ -44,7 +44,7 @@ namespace AlgorithmsDataStructures
             return default;
         }
 
-        public int Count()
+        public int Size()
         {
             return elements.Count;
         }
