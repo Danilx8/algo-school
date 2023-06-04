@@ -3,88 +3,50 @@ using System.Collections.Generic;
 
 namespace AlgorithmsDataStructures
 {
-    public class Node<T>
-    {
-        public T value;
-        public Node<T> next;
-        public Node<T> prev;
-
-        public Node() { }
-
-        public Node(T _value) { value = _value; }
-    }
-
-    public class DummyNode<T> : Node<T>
-    {
-        public DummyNode()
-        {
-            next = null;
-            prev = null;
-        }
-    }
-
     public class Deque<T>
     {
-        DummyNode<T> edge;
+        private List<T> elements;
 
         public Deque()
         {
-            edge = new DummyNode<T>();
-            edge.next = edge;
-            edge.prev = edge;
+            elements = new List<T>();
         }
 
         public void AddFront(T item)
         {
-            Node<T> node = new Node<T>(item);
-            
-            node.next = edge.next;
-            edge.next.prev = node;
-            edge.next = node;
-            node.prev = edge;
+            elements.Add(item);
         }
 
         public void AddTail(T item)
         {
-            Node<T> node = new Node<T>(item);
-            
-            node.prev = edge.prev;
-            edge.prev.next = node;
-            edge.prev = node;
-            node.next = edge;
+            elements.Insert(0, item);
         }
 
         public T RemoveFront()
         {
-            if (edge.next is DummyNode<T> ) return default(T);
-
-            T value = edge.next.value;
-            edge.next.next.prev = edge.next;
-            edge.next = edge.next.next;
-            return value;
+            if (elements.Count > 0)
+            {
+                T result = elements[elements.Count - 1];
+                elements.RemoveAt(elements.Count - 1);
+                return result;
+            }
+            return default;
         }
 
         public T RemoveTail()
         {
-            if (edge.prev is DummyNode<T>) return default(T);
-
-            T value = edge.prev.value;
-            edge.prev.prev.next = edge.prev;
-            edge.prev = edge.prev.prev;
-            return value;
+            if (elements.Count > 0)
+            {
+                T result = elements[0];
+                elements.RemoveAt(0);
+                return result;
+            }
+            return default;
         }
 
-        public int Size()
+        public int Count()
         {
-            Node<T> node = edge.next;
-            int count = 0;
-
-            while (!(node is DummyNode<T>))
-            {
-                ++count;
-                node = node.next;
-            }
-            return count;
+            return elements.Count;
         }
     }
 }

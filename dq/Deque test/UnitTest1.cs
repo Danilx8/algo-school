@@ -19,7 +19,7 @@ namespace AlgorithmsDataStructures
             for (int i = 0; i < 10; ++i)
             {
                 if (i % 2 == 0) bigDeque.AddFront(i);
-                else bigDeque.AddTail(i);
+                else bigDeque.AddTail(i);   
             }
         }
 
