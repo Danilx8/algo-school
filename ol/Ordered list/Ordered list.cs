@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
+using System.Security.Policy;
 using System.Xml.Linq;
 
 namespace AlgorithmsDataStructures
@@ -52,37 +53,78 @@ namespace AlgorithmsDataStructures
             Node<T> node = head;
             Node<T> insertNode = new Node<T>(value);
 
-            while (node != null)
-            {
-
-
-                node = node.next;
-            }
+            if (_ascending) AscendingInsert(node, insertNode);
+            else DescendingInsert(node, insertNode);
         }
 
         public Node<T> Find(T val)
         {
-            return null; // здесь будет ваш код
+            if (_ascending && Compare(head.value, val) > 0) return default;
+            if (_ascending && Compare(tail.value, val) < 0) return default;
+            if (!_ascending && Compare(head.value, val) < 0) return default;
+            if (!_ascending && Compare(tail.value, val) > 0) return default;
+
+            Node<T> node = head;
+            while (node != null)
+            {
+                if (Compare(node.value, val) == 0) return node;
+                node = node.next;
+            }
+            return default;
         }
 
         public void Delete(T val)
         {
-            // здесь будет ваш код
+            Node<T> node = Find(val);
+
+            if (node == head)
+            {
+                head = head.next;
+                head.prev = null;
+            }
+            else if (node == tail)
+            {
+                tail = tail.prev;
+                tail.next = null;
+            }
+            else 
+            {
+                node.prev.next = node.next;
+                node.next = node.next.next;
+            }
         }
 
         public void Clear(bool asc)
         {
             _ascending = asc;
-            // здесь будет ваш код
+
+            Node<T> node = head;
+
+            while (node != null)
+            {
+                head = head.next;
+                node.next = null;
+                node = head;
+
+                if (node == null) tail = null;
+                else head.prev = null;
+            }
         }
 
         public int Count()
         {
-            return 0; // здесь будет ваш код подсчёта количества элементов в списке
+            int length = 0;
+            Node<T> node = head;
+            
+            while (node != null)
+            {
+                ++length;
+                node = node.next;
+            }
+            return length;
         }
 
-        List<Node<T>> GetAll() // выдать все элементы упорядоченного 
-                               // списка в виде стандартного списка
+        public List<Node<T>> GetAll()
         {
             List<Node<T>> r = new List<Node<T>>();
             Node<T> node = head;
@@ -94,21 +136,82 @@ namespace AlgorithmsDataStructures
             return r;
         }
 
-        void Insert(Node<T> compareNode, Node<T> insertNode) 
+        private void AscendingInsert(Node<T> compareNode, Node<T> insertNode)
         {
-            switch (Compare(compareNode.value, insertNode.value))
+            int comparison = 0;
+            
+            while (compareNode != null)
             {
-                case -1:
+                comparison = Compare(insertNode.value, compareNode.value);
 
+                if (comparison > 0 && compareNode.next is null)
+                {
+                    compareNode.next = insertNode;
+                    insertNode.prev = compareNode;
+                    insertNode.next = null;
+                    tail = insertNode;
                     break;
-                case 0:
-
+                }
+                else if (comparison < 1 && compareNode.prev is null)
+                {
+                    compareNode.prev = insertNode;
+                    insertNode.next = compareNode;
+                    insertNode.prev = null;
+                    head = insertNode;
                     break;
-                case 1: 
-
+                } 
+                else if (comparison < 1)
+                {
+                    insertNode.prev = compareNode.prev;
+                    compareNode.prev.next = insertNode;
+                    compareNode.prev = insertNode;
+                    insertNode.next = compareNode;
                     break;
+                }
+                compareNode = compareNode.next;
             }
+
+            if (insertNode.prev is null) head = insertNode;
+            if (insertNode.next is null) tail = insertNode;
+        }
+
+        private void DescendingInsert(Node<T> compareNode, Node<T> insertNode)
+        {
+            int comparison = 0;
+            
+            while (compareNode != null)
+            {
+                comparison = Compare(insertNode.value, compareNode.value);
+
+                if (comparison < 0 && compareNode.next is null)
+                {
+                    compareNode.next = insertNode;
+                    insertNode.prev = compareNode;
+                    insertNode.next = null;
+                    tail = insertNode;
+                    break;
+                }
+                else if (comparison > -1 && compareNode.prev is null)
+                {
+                    compareNode.prev = insertNode;
+                    insertNode.next = compareNode;
+                    insertNode.prev = null;
+                    head = insertNode;
+                    break;
+                }
+                else if (comparison > -1)
+                {
+                    insertNode.prev = compareNode.prev;
+                    compareNode.prev.next = insertNode;
+                    compareNode.prev = insertNode;
+                    insertNode.next = compareNode;
+                    break;
+                }
+                compareNode = compareNode.next;
+            }
+
+            if (insertNode.prev is null) head = insertNode;
+            if (insertNode.next is null) tail = insertNode;
         }
     }
-
 }
