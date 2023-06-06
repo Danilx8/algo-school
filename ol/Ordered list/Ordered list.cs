@@ -79,20 +79,21 @@ namespace AlgorithmsDataStructures
             bool isFirst = node == head;
             bool isLast = node == tail;
 
-
-            if (isFirst)
+            if (isFirst && isLast)
+            {
+                head = tail = null;
+            }
+            else if (isFirst)
             {
                 head = head.next;
                 head.prev = null;
-            }
-            
-            if (isLast)
+            }            
+            else if (isLast)
             {
                 tail = tail.prev;
                 tail.next = null;
             }
-
-            if (!isFirst && !isLast)
+            else
             {
                 node.prev.next = node.next;
                 node.next.prev = node.prev;

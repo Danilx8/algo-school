@@ -10,6 +10,7 @@ namespace Ordered_list_test
         public OrderedList<int> emptyDescList;
         public OrderedList<int> hugeAscList;
         public OrderedList<int> hugeDescList;
+        public OrderedList<int> singleList;
 
         [TestInitialize]
         public void Initialize() 
@@ -18,6 +19,9 @@ namespace Ordered_list_test
             emptyDescList = new OrderedList<int>(false);
             hugeAscList = new OrderedList<int>(true);
             hugeDescList = new OrderedList<int>(false);
+            singleList = new OrderedList<int>(true);
+
+            singleList.Add(1);
 
             for (int i = 0; i < 10; ++i)
             {
@@ -78,7 +82,7 @@ namespace Ordered_list_test
         [TestMethod]
         public void AscEndDelete()
         {
-            hugeAscList.Delete(9);
+            hugeAscList.Delete(hugeAscList.tail.value);
             Assert.AreEqual(hugeAscList.tail.value, 8);
         }
 
@@ -108,6 +112,13 @@ namespace Ordered_list_test
         {
             hugeAscList.Delete(8);
             Assert.AreEqual(7, hugeAscList.tail.prev.value);
+        }
+
+        [TestMethod]
+        public void DeleteSingle()
+        {
+            singleList.Delete(1);
+            Assert.AreEqual(0, singleList.Count());
         }
     }
 }
