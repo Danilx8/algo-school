@@ -120,5 +120,12 @@ namespace Ordered_list_test
             singleList.Delete(1);
             Assert.AreEqual(0, singleList.Count());
         }
+
+        [TestMethod]
+        public void DeleteEmpty()
+        {
+            emptyAscList.Delete(0);
+            Assert.AreEqual(0, emptyAscList.Count());
+        }
     }
 }

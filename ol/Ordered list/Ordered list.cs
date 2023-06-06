@@ -59,6 +59,7 @@ namespace AlgorithmsDataStructures
 
         public Node<T> Find(T val)
         {
+            if (head == null) return default;
             if (_ascending && Compare(head.value, val) > 0) return default;
             if (_ascending && Compare(tail.value, val) < 0) return default;
             if (!_ascending && Compare(head.value, val) < 0) return default;
@@ -93,7 +94,7 @@ namespace AlgorithmsDataStructures
                 tail = tail.prev;
                 tail.next = null;
             }
-            else
+            else if (node != default)
             {
                 node.prev.next = node.next;
                 node.next.prev = node.prev;
