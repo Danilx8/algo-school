@@ -36,16 +36,14 @@ namespace AlgorithmsDataStructures
         {
             if (typeof(T) == typeof(String))
             {
-                string firstNumber = Convert.ToString(v1).Trim();
-                string secondNumber = Convert.ToString(v2).Trim();
-                return firstNumber.CompareTo(secondNumber);
+                string firstStringNumber = Convert.ToString(v1).Trim();
+                string secondStringNumber = Convert.ToString(v2).Trim();
+                return firstStringNumber.CompareTo(secondStringNumber);
             }
-            else
-            {
-                int firstNumber = Convert.ToInt32(v1);
-                int secondNumber = Convert.ToInt32(v2);
-                return firstNumber.CompareTo(secondNumber);
-            }
+
+            int firstNumber = Convert.ToInt32(v1);
+            int secondNumber = Convert.ToInt32(v2);
+            return firstNumber.CompareTo(secondNumber);
         }
 
         public void Add(T value)
@@ -88,7 +86,7 @@ namespace AlgorithmsDataStructures
             {
                 head = head.next;
                 head.prev = null;
-            }            
+            }
             else if (isLast)
             {
                 tail = tail.prev;
@@ -123,7 +121,7 @@ namespace AlgorithmsDataStructures
         {
             int length = 0;
             Node<T> node = head;
-            
+
             while (node != null)
             {
                 ++length;
@@ -147,7 +145,7 @@ namespace AlgorithmsDataStructures
         private void AscendingInsert(Node<T> compareNode, Node<T> insertNode)
         {
             int comparison = 0;
-            
+
             while (compareNode != null)
             {
                 comparison = Compare(insertNode.value, compareNode.value);
@@ -167,7 +165,7 @@ namespace AlgorithmsDataStructures
                     insertNode.prev = null;
                     head = insertNode;
                     break;
-                } 
+                }
                 else if (comparison < 1)
                 {
                     insertNode.prev = compareNode.prev;
@@ -186,7 +184,7 @@ namespace AlgorithmsDataStructures
         private void DescendingInsert(Node<T> compareNode, Node<T> insertNode)
         {
             int comparison = 0;
-            
+
             while (compareNode != null)
             {
                 comparison = Compare(insertNode.value, compareNode.value);
