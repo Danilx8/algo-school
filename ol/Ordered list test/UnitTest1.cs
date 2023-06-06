@@ -102,5 +102,12 @@ namespace Ordered_list_test
             hugeDescList.Delete(9);
             Assert.AreEqual(hugeDescList.head.value, 8);
         }
+
+        [TestMethod]
+        public void DeleteInbetween()
+        {
+            hugeAscList.Delete(8);
+            Assert.AreEqual(7, hugeAscList.tail.prev.value);
+        }
     }
 }

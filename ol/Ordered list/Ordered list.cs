@@ -76,20 +76,26 @@ namespace AlgorithmsDataStructures
         public void Delete(T val)
         {
             Node<T> node = Find(val);
+            bool isFirst = node == head;
+            bool isLast = node == tail;
 
-            if (node == head)
+
+            if (isFirst)
             {
                 head = head.next;
                 head.prev = null;
             }
-            else if (node == tail)
+            
+            if (isLast)
             {
                 tail = tail.prev;
                 tail.next = null;
             }
-            else 
+
+            if (!isFirst && !isLast)
             {
                 node.prev.next = node.next;
+                node.next.prev = node.prev;
                 node.next = node.next.next;
             }
         }
