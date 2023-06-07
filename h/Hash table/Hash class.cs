@@ -33,8 +33,7 @@ namespace AlgorithmsDataStructures
                 if (slots[index] is null) return index;
 
                 ++visitedAmount;
-                index += step;
-                if (index > size) index -= size;
+                index = (index + step) % size;
             }
 
             return -1;
@@ -54,11 +53,10 @@ namespace AlgorithmsDataStructures
 
         public int Find(string value)
         {
-            int index = SeekSlot(value);
-
-            if (index == -1) return -1;
-
-            if (slots[index] == value) return index;
+            for (int i = 0; i < size; ++i)
+            {
+                if (slots[i] == value) return i;
+            }
             return -1;
         }
     }
