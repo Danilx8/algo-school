@@ -20,7 +20,7 @@ namespace AlgorithmsDataStructures
 
         public int HashFun(string value)
         {
-           return value.GetHashCode() % size;
+           return Math.Abs(value.GetHashCode()) % size;
         }
 
         public int SeekSlot(string value)
