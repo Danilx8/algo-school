@@ -31,6 +31,7 @@ namespace AlgorithmsDataStructures
 
         public void Put(string key, T value)
         {
+            slots[HashFun(key)] = key;
             values[HashFun(key)] = value;
         }
 
