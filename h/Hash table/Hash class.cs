@@ -4,11 +4,11 @@ using System.Collections.Generic;
 namespace AlgorithmsDataStructures
 {
 
-    public class HashTable
+    public class HashTable<T>
     {
         public int size;
         public int step;
-        public string[] slots;
+        public T[] slots;
 
         public HashTable() { }
 
@@ -16,23 +16,23 @@ namespace AlgorithmsDataStructures
         {
             size = sz;
             step = stp;
-            slots = new string[size];
-            for (int i = 0; i < size; i++) slots[i] = null;
+            slots = new T[size];
+            for (int i = 0; i < size; i++) slots[i] = default;
         }
 
-        public int HashFun(string value)
+        public int HashFun(T value)
         {
            return Math.Abs(value.GetHashCode()) % size;
         }
 
-        public int SeekSlot(string value)
+        public int SeekSlot(T value)
         {
             int index = HashFun(value);
             int visitedAmount = 0;
 
             while (visitedAmount < size)
             {
-                if (slots[index] is null) return index;
+                if (slots[index] == null) return index;
 
                 ++visitedAmount;
                 index = (index + step) % size;
@@ -41,8 +41,10 @@ namespace AlgorithmsDataStructures
             return -1;
         }
 
-        public int Put(string value)
+        public int Put(T value)
         {
+            if (Find(value) != -1) return -1;
+
             int index = SeekSlot(value);
 
             if (index != -1)
@@ -53,14 +55,22 @@ namespace AlgorithmsDataStructures
             return -1;
         }
 
-        public int Find(string value)
+        public int Find(T value)
         {
-            for (int i = 0; i < size; ++i)
+            int index = HashFun(value);
+
+            int checkedElements = 0;
+            while (checkedElements < size)
             {
-                if (slots[i] == value) return i;
+                if (slots[index].Equals(value)) return index;
+                while (slots[index] == null && checkedElements < size)
+                {
+                    index = (index + step) % size;
+                    ++checkedElements;
+                }
             }
+
             return -1;
         }
     }
-
 }
