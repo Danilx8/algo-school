@@ -9,6 +9,7 @@ namespace AlgorithmsDataStructures
         public int size;
         public int step;
         public T[] slots;
+        public int count = 0;
 
         public HashTable() { }
 
@@ -50,6 +51,7 @@ namespace AlgorithmsDataStructures
             if (index != -1)
             {
                 slots[index] = value;
+                ++count;
                 return index;
             }
             return -1;
