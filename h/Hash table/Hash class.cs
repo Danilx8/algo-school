@@ -10,6 +10,8 @@ namespace AlgorithmsDataStructures
         public int step;
         public string[] slots;
 
+        public HashTable() { }
+
         public HashTable(int sz, int stp)
         {
             size = sz;
