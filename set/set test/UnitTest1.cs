@@ -236,5 +236,14 @@ namespace set_test
 
             Assert.IsFalse(set.IsSubset(set2));
         }
+
+        [TestMethod]
+        public void UnderCollisionSearch()
+        {
+            Console.WriteLine(set.Put("John Doe"));
+            Console.WriteLine(set.Remove("John Doe"));
+            Console.WriteLine(set.Put("John Doe"));
+            Assert.IsTrue(set.Get("John Doe"));
+        }
     }
 }
