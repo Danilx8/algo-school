@@ -72,7 +72,7 @@ namespace set_test
 
             for (int j = 5; j < 10; ++j)
             {
-                Assert.AreEqual(-1, resultSet.Find(j.ToString()));
+                Assert.IsFalse(resultSet.Get(j.ToString()));
             }
         }
 
@@ -111,7 +111,7 @@ namespace set_test
             PowerSet<string> resultSet = set.Union(set2);
             for (int i = 0; i < 8; ++i)
             {
-                Assert.AreNotEqual(-1, resultSet.Find(i.ToString()));
+                Assert.IsTrue(resultSet.Get(i.ToString()));
             }
         }
 
@@ -127,7 +127,7 @@ namespace set_test
             PowerSet<string> resultSet = set.Union(set2);
             for (int j = 0; j < 5; ++j)
             {
-                Assert.AreNotEqual(-1, resultSet.Find(j.ToString()));
+                Assert.IsTrue(resultSet.Get(j.ToString()));
             }
         }
 
@@ -143,7 +143,7 @@ namespace set_test
             PowerSet<string> resultSet = set.Union(set2);
             for (int j = 0; j < 5; ++j)
             {
-                Assert.AreNotEqual(-1, resultSet.Find(j.ToString()));
+                Assert.IsTrue(resultSet.Get(j.ToString()));
             }
         }
 
@@ -164,7 +164,7 @@ namespace set_test
             PowerSet<string> resultSet = set.Difference(set2);
             for (int i = 0; i < 3; ++i)
             {
-                Assert.AreNotEqual(-1, resultSet.Find(i.ToString()));
+                Assert.IsTrue(resultSet.Get(i.ToString()));
             }
         }
 

@@ -19,10 +19,10 @@ namespace AlgorithmsDataStructures
 
     public class PowerSet<T>
     {
-        private int size;
-        private int step;
-        private HashNode<T>[] slots;
-        private int count;
+        public int size;
+        public int step;
+        public HashNode<T>[] slots;
+        public int count;
 
         public PowerSet()
         {
