@@ -69,19 +69,17 @@ namespace AlgorithmsDataStructures
             return false;
         }
 
-        public int Put(T value)
+        public void Put(T value)
         {
-            if (Find(value) != -1) return -1;
-
-            int index = SeekSlot(value);
+            int index;
+            if (Find(value) != -1) index = SeekSlot(value);
+            else index = -1;
 
             if (index != -1)
             {
                 slots[index].value = value;
                 ++count;
-                return index;
             }
-            return -1;
         }
 
         public int Find(T value)
