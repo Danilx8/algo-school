@@ -72,7 +72,7 @@ namespace AlgorithmsDataStructures
         public void Put(T value)
         {
             int index;
-            if (Find(value) != -1) index = SeekSlot(value);
+            if (Find(value) == -1) index = SeekSlot(value);
             else index = -1;
 
             if (index != -1)
@@ -84,16 +84,15 @@ namespace AlgorithmsDataStructures
 
         public int Find(T value)
         {
-            if (count == 0) return -1;
-
             int index = HashFun(value);
 
             int checkedElements = 0;
 
             while (checkedElements < size)
             {
-                if ((slots[index].value == null || !(slots[index].value.Equals(value))) && !(slots[index].deleted)) return -1;
-                if (slots[index].value.Equals(value)) return index;
+                if (!(value.Equals(slots[index].value)) && !(slots[index].deleted)) return -1;
+                if (value.Equals(slots[index].value)) return index;
+
                 index = (index + step) % size;
                 ++checkedElements;
             }

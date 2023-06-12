@@ -16,9 +16,12 @@ namespace set_test
         [TestMethod]
         public void AddTest()
         {
-            int index = set.Put("John Doe");
-            Assert.AreNotEqual(-1, index);
-            Assert.AreEqual(-1, set.Put("John Doe"));
+            set.Put("John Doe");
+            set.Remove("John Doe");
+            Assert.IsFalse(set.Get("John Doe"));
+            set.Put("John Doe");
+            Assert.IsTrue(set.Get("John Doe"));
+            Assert.AreEqual(1, set.Size());
 
             //for (int i = 0; i < 5; ++i)
             //{
@@ -45,7 +48,7 @@ namespace set_test
         [TestMethod]
         public void RemoveTest()
         {
-            int index = set.Put("John Doe");
+            set.Put("John Doe");
 
             Assert.IsTrue(set.Remove("John Doe"));
         }
@@ -74,6 +77,7 @@ namespace set_test
             {
                 Assert.IsFalse(resultSet.Get(j.ToString()));
             }
+            Assert.AreEqual(5, resultSet.Size());
         }
 
         [TestMethod]
@@ -113,6 +117,7 @@ namespace set_test
             {
                 Assert.IsTrue(resultSet.Get(i.ToString()));
             }
+            Assert.AreEqual(8, resultSet.Size());
         }
 
         [TestMethod]
@@ -129,6 +134,7 @@ namespace set_test
             {
                 Assert.IsTrue(resultSet.Get(j.ToString()));
             }
+            Assert.AreEqual(5, resultSet.Size());
         }
 
         [TestMethod]
@@ -145,6 +151,7 @@ namespace set_test
             {
                 Assert.IsTrue(resultSet.Get(j.ToString()));
             }
+            Assert.AreEqual(5, set.Size());
         }
 
         [TestMethod]
@@ -166,6 +173,7 @@ namespace set_test
             {
                 Assert.IsTrue(resultSet.Get(i.ToString()));
             }
+            Assert.AreEqual(3, resultSet.Size());
         }
 
         [TestMethod]
@@ -235,15 +243,6 @@ namespace set_test
             }
 
             Assert.IsFalse(set.IsSubset(set2));
-        }
-
-        [TestMethod]
-        public void UnderCollisionSearch()
-        {
-            Console.WriteLine(set.Put("John Doe"));
-            Console.WriteLine(set.Remove("John Doe"));
-            Console.WriteLine(set.Put("John Doe"));
-            Assert.IsTrue(set.Get("John Doe"));
         }
     }
 }
