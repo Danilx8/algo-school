@@ -90,8 +90,8 @@ namespace AlgorithmsDataStructures
 
             while (checkedElements < size)
             {
-                if (!(value.Equals(slots[index].value)) && !(slots[index].deleted)) return -1;
                 if (value.Equals(slots[index].value)) return index;
+                if (slots[index].value == null && !(slots[index].deleted)) return -1;
 
                 index = (index + step) % size;
                 ++checkedElements;

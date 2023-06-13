@@ -248,5 +248,23 @@ namespace set_test
                 Assert.IsTrue(set2.Get(j.ToString()));
             }
         }
+
+        [TestMethod]
+        public void VeryBigGetTest()
+        {
+            const int SIZE = 2000;
+            for (int i = 0; i < SIZE; ++i)
+            {
+                set.Put(i.ToString());
+                Console.WriteLine(set.Find(i.ToString()));
+            }
+
+            Assert.AreEqual(SIZE, set.Size());
+
+            for (int i = 0; i < SIZE; ++i)
+            {
+                Assert.IsTrue(set.Get(i.ToString()));
+            }
+        }
     }
 }
