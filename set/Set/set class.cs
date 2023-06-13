@@ -45,13 +45,11 @@ namespace AlgorithmsDataStructures
         private int SeekSlot(T value)
         {
             int index = HashFun(value);
-            int visitedAmount = 0;
 
-            while (visitedAmount < size)
+            for (int checkedElements = 0; checkedElements < size; ++checkedElements)
             {
                 if (slots[index].value == null) return index;
 
-                ++visitedAmount;
                 index = (index + step) % size;
             }
 
@@ -86,15 +84,12 @@ namespace AlgorithmsDataStructures
         {
             int index = HashFun(value);
 
-            int checkedElements = 0;
-
-            while (checkedElements < size)
+            for (int checkedElements = 0; checkedElements < size; ++checkedElements)
             {
                 if (value.Equals(slots[index].value)) return index;
                 if (slots[index].value == null && !(slots[index].deleted)) return -1;
 
                 index = (index + step) % size;
-                ++checkedElements;
             }
 
             return -1;
