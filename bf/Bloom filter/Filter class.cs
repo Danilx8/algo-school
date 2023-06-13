@@ -7,40 +7,40 @@ namespace AlgorithmsDataStructures
 {
     public class BloomFilter
     {
-        public UInt64 filter_len;
+        public int filter_len;
         public byte[] array;
 
-        public BloomFilter(UInt64 f_len)
+        public BloomFilter(int f_len)
         {
             filter_len = f_len;
             array = new byte[filter_len];
         }
 
-        public UInt64 Hash1(string str1)
+        public int Hash1(string str1)
         {
             const int MULTIPLIER = 17;
-            UInt64 sum = 0;
+            ulong sum = 0;
 
             for (int i = 0; i < str1.Length; i++)
             {
-                UInt64 code = (UInt64)str1[i];
+                ulong code = (ulong)str1[i];
                 sum *= MULTIPLIER;
                 sum += code;
             }
-            return sum % filter_len;
+            return (int)(sum % (ulong)filter_len);
         }
-        public UInt64 Hash2(string str1)
+        public int Hash2(string str1)
         {
             const int MULTIPLIER = 223;
-            UInt64 sum = 0;
+            ulong sum = 0;
 
             for (int i = 0; i < str1.Length; i++)
             {
-                UInt64 code = (UInt64)str1[i];
+                ulong code = (ulong)str1[i];
                 sum *= MULTIPLIER;
                 sum += code;
             }
-            return sum % filter_len;
+            return (int)(sum % (ulong)filter_len);
         }
 
         public void Add(string str1)

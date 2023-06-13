@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bloom filter\Bloom filter.csproj" />
     <ProjectReference Include="..\Blume filter\Bloom filter.csproj" />
   </ItemGroup>
 
