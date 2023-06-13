@@ -5,15 +5,25 @@ using System.Linq.Expressions;
 
 namespace AlgorithmsDataStructures
 {
+    public class ArrayOfBits
+    {
+        public bool[] Bits { get; set; }
+
+        public ArrayOfBits(int size)
+        {
+            Bits = new bool[size];
+        }
+    }
+
     public class BloomFilter
     {
         public int filter_len;
-        public byte[] array;
+        public ArrayOfBits array;
 
         public BloomFilter(int f_len)
         {
             filter_len = f_len;
-            array = new byte[filter_len];
+            array = new ArrayOfBits(filter_len);
         }
 
         public int Hash1(string str1)
@@ -45,12 +55,12 @@ namespace AlgorithmsDataStructures
 
         public void Add(string str1)
         {
-            array[Hash1(str1)] = array[Hash2(str1)] = 1;
+            array.Bits[Hash1(str1)] = array.Bits[Hash2(str1)] = true;
         }
 
         public bool IsValue(string str1)
         {
-            if (array[Hash1(str1)] == 1 && array[Hash2(str1)] == 1) return true;
+            if (array.Bits[Hash1(str1)] && array.Bits[Hash2(str1)]) return true;
             return false;
         }
     }
