@@ -22,27 +22,6 @@ namespace set_test
             set.Put("John Doe");
             Assert.IsTrue(set.Get("John Doe"));
             Assert.AreEqual(1, set.Size());
-
-            //for (int i = 0; i < 5; ++i)
-            //{
-            //    set.Put(i.ToString());
-            //}
-
-            //PowerSet<string> set2 = new PowerSet<string>();
-            //for (int j = 0; j < 10; ++j)
-            //{
-            //    set2.Put(j.ToString());
-            //}
-
-            //for (int i = 0; i < 5; ++i)
-            //{
-            //    Assert.AreNotEqual(-1, set.Find(i.ToString()));
-            //}
-
-            //for (int j = 5; j < 10; ++j)
-            //{
-            //    Assert.AreNotEqual(-1, set.Find(j.ToString()));
-            //}
         }
 
         [TestMethod]
@@ -243,6 +222,31 @@ namespace set_test
             }
 
             Assert.IsFalse(set.IsSubset(set2));
+        }
+
+        [TestMethod]
+        public void GetTest()
+        {
+            for (int i = 0; i < 5; ++i)
+            {
+                set.Put(i.ToString());
+            }
+
+            PowerSet<string> set2 = new PowerSet<string>();
+            for (int j = 0; j < 10; ++j)
+            {
+                set2.Put(j.ToString());
+            }
+
+            for (int i = 0; i < 5; ++i)
+            {
+                Assert.IsTrue(set.Get(i.ToString()));
+            }
+
+            for (int j = 0; j < 10; ++j)
+            {
+                Assert.IsTrue(set2.Get(j.ToString()));
+            }
         }
     }
 }
