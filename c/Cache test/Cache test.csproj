@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cash\Cash.csproj" />
+    <ProjectReference Include="..\Cash\Cache.csproj" />
   </ItemGroup>
 
 </Project>

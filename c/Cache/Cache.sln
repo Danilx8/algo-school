@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cash", "Cash.csproj", "{A22D14B2-CC52-428D-BA3B-9DDD0EDE4FE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cache", "Cache.csproj", "{A22D14B2-CC52-428D-BA3B-9DDD0EDE4FE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cash test", "..\Cash test\Cash test.csproj", "{1D61E4B9-E3C7-4210-A047-C95ECBE77007}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache test", "..\Cash test\Cache test.csproj", "{1D61E4B9-E3C7-4210-A047-C95ECBE77007}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
