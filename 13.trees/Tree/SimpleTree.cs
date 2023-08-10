@@ -100,6 +100,7 @@ namespace AlgorithmsDataStructures2
 
         public void MoveNode(SimpleTreeNode<T> OriginalNode, SimpleTreeNode<T> NewParent)
         {
+            OriginalNode.Parent?.Children.Remove(OriginalNode);
             OriginalNode.Parent = NewParent;
             if (NewParent.Children is null)
             {
