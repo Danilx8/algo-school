@@ -134,6 +134,22 @@ namespace AlgorithmsDataStructures2
             return leavesAmount;
         }
 
-    }
+        public void RankNodes()
+        {
+            Root.NodeLevel = 0;
+            RankNodesChildren(Root);
+        }
 
+        private void RankNodesChildren(SimpleTreeNode<T> parent)
+        {
+            if (!(parent.Children is null))
+            {
+                for (int i = 0; i < parent.Children.Count; ++i)
+                {
+                    parent.Children[i].NodeLevel = parent.NodeLevel + 1;
+                    RankNodesChildren(parent.Children[i]);
+                }
+            }
+        }
+    }
 }

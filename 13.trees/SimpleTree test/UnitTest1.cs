@@ -118,5 +118,20 @@ namespace SimpleTree_test
             emptyTree.AddChild(null, node);
             CollectionAssert.AreEqual(new List<SimpleTreeNode<int>> { node }, emptyTree.GetAllNodes());
         }
+
+        [TestMethod]
+        public void NodesRanking()
+        {
+            SimpleTreeNode<int> childNode = new SimpleTreeNode<int>(1, parentNode);
+            SimpleTreeNode<int> grandChildNode = new SimpleTreeNode<int>(2, childNode);
+
+            tree.AddChild(tree.Root, childNode);
+            tree.AddChild(childNode, grandChildNode);
+
+            tree.RankNodes();
+            Assert.AreEqual(tree.Root.NodeLevel, 0);
+            Assert.AreEqual(childNode.NodeLevel, 1);
+            Assert.AreEqual(grandChildNode.NodeLevel, 2);
+        }
     }
 }
