@@ -39,6 +39,7 @@ namespace SimpleTree_test
             CollectionAssert.AreEqual(emptyList, tree.FindNodesByValue(childNode.NodeValue));
             CollectionAssert.AreEqual(emptyList, tree.FindNodesByValue(grandChildNode.NodeValue));
             CollectionAssert.AreEqual(new List<SimpleTreeNode<int>> { tree.Root }, tree.GetAllNodes());
+            Assert.AreEqual(1, tree.LeafCount());
         }
 
         [TestMethod]

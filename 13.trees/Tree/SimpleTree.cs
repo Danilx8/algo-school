@@ -125,7 +125,7 @@ namespace AlgorithmsDataStructures2
             List<SimpleTreeNode<T>> children = AccumulateAllChildren(Root); 
             for (int i = 0; i < children.Count; ++i)
             {
-                if (children[i].Children is null)
+                if (children[i].Children is null || children[i].Children.Count == 0)
                 {
                     ++leavesAmount;
                 }
