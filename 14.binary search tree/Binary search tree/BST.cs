@@ -191,12 +191,12 @@ namespace AlgorithmsDataStructures2
         {
             if (node.LeftChild != null)
             {
-                InDepthTraversing(node.LeftChild, ++counter);
+                counter = InDepthTraversing(node.LeftChild, ++counter);
             }
 
             if (node.RightChild != null)
             {
-                InDepthTraversing(node.RightChild, ++counter);
+                counter = InDepthTraversing(node.RightChild, ++counter);
             }
 
             return counter;
