@@ -178,6 +178,11 @@ namespace AlgorithmsDataStructures2
 
         public int Count()
         {
+            if (Root == null)
+            {
+                return 0;
+            }
+
             int counter = 1;
             return InDepthTraversing(Root, counter);
         }
