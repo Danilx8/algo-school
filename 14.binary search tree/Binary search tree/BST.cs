@@ -147,6 +147,12 @@ namespace AlgorithmsDataStructures2
                 return false; // если узел не найден
             }
 
+            if (searchResult.Node == Root)
+            {
+                Root = null;
+                return true;
+            }
+
             BSTNode<T> ancestorNode = null;
             if (searchResult.Node.RightChild != null)
             {
