@@ -147,7 +147,7 @@ namespace AlgorithmsDataStructures2
                 return false; // если узел не найден
             }
 
-            BSTNode<T> ancestorNode = searchResult.Node.LeftChild;
+            BSTNode<T> ancestorNode = null;
             if (searchResult.Node.RightChild != null)
             {
                 ancestorNode = searchResult.Node.RightChild;
@@ -155,6 +155,9 @@ namespace AlgorithmsDataStructures2
                 {
                     ancestorNode = ancestorNode.LeftChild;
                 }
+            } else if (searchResult.Node.LeftChild != null)
+            {
+                ancestorNode = searchResult.Node.LeftChild;
             }
 
             if (searchResult.Node == searchResult.Node.Parent.LeftChild)
