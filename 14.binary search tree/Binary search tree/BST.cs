@@ -166,6 +166,28 @@ namespace AlgorithmsDataStructures2
                 ancestorNode = searchResult.Node.LeftChild;
             }
 
+            if(ancestorNode == ancestorNode.Parent.LeftChild)
+            {
+                ancestorNode.Parent.LeftChild = null;
+            } else
+            {
+                ancestorNode.Parent.RightChild = null;
+            }
+
+            ancestorNode.Parent = searchResult.Node.Parent;
+            
+            ancestorNode.LeftChild = searchResult.Node.LeftChild;
+            if (searchResult.Node.LeftChild != null)
+            {
+                searchResult.Node.LeftChild.Parent = ancestorNode;
+            }
+
+            ancestorNode.RightChild = searchResult.Node.RightChild;
+            if (searchResult.Node.RightChild != null)
+            {
+                searchResult.Node.RightChild.Parent = ancestorNode;
+            }
+
             if (searchResult.Node == searchResult.Node.Parent.LeftChild)
             {
                 searchResult.Node.Parent.LeftChild = ancestorNode;
@@ -191,12 +213,12 @@ namespace AlgorithmsDataStructures2
         {
             if (node.LeftChild != null)
             {
-                InDepthTraversing(node.LeftChild, ++counter);
+                counter = InDepthTraversing(node.LeftChild, ++counter);
             }
 
             if (node.RightChild != null)
             {
-                InDepthTraversing(node.RightChild, ++counter);
+                counter = InDepthTraversing(node.RightChild, ++counter);
             }
 
             return counter;

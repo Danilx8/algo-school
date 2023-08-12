@@ -37,6 +37,7 @@ namespace BST_test
             tree.AddKeyValue(1, 1);
             BSTFind<int> firstSupposedResult = tree.FindNodeByKey(1);
             Assert.IsTrue(firstSupposedResult.NodeHasKey);
+            tree.DeleteNodeByKey(10);
         }
 
         [TestMethod]
@@ -53,6 +54,7 @@ namespace BST_test
                 tree.AddKeyValue(i, i);
                 Assert.AreEqual(i, tree.FinMinMax(root, true).NodeKey);
             }
+            tree.DeleteNodeByKey(9);
         }
 
         [TestMethod]
@@ -63,6 +65,7 @@ namespace BST_test
                 tree.AddKeyValue(i, i);
                 Assert.AreEqual(0, tree.FinMinMax(root, false).NodeKey);
             }
+            tree.DeleteNodeByKey(0);
         }
 
         [TestMethod]
@@ -75,6 +78,7 @@ namespace BST_test
             }
             BSTNode<int> subNode = tree.FindNodeByKey(9).Node;
             Assert.AreEqual(9, tree.FinMinMax(subNode, true).NodeKey);
+            tree.DeleteNodeByKey(9);
         }
 
         [TestMethod]
@@ -87,6 +91,7 @@ namespace BST_test
             }
             BSTNode<int> subNode = tree.FindNodeByKey(2).Node;
             Assert.AreEqual(2, tree.FinMinMax(subNode, false).NodeKey);
+            tree.DeleteNodeByKey(2);
         }
 
         [TestMethod]
@@ -100,9 +105,23 @@ namespace BST_test
             tree.AddKeyValue(11, 11);
             tree.AddKeyValue(13, 13);
 
+            Assert.AreEqual(8, tree.Count());
             Assert.IsTrue(tree.FindNodeByKey(10).NodeHasKey);
             tree.DeleteNodeByKey(10);
+            Assert.AreEqual(7, tree.Count());
             Assert.AreEqual(11, tree.FindNodeByKey(0).Node.RightChild.NodeKey);
+        }
+
+        [TestMethod]
+        public void Counter()
+        {
+            Assert.AreEqual(0, emptyTree.Count());
+            Assert.AreEqual(1, tree.Count());
+
+            tree.AddKeyValue(1, 1);
+            tree.AddKeyValue(-1, -1);
+            tree.AddKeyValue(15, 15);
+            Assert.AreEqual(4, tree.Count());
         }
     }
 }
