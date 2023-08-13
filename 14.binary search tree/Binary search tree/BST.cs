@@ -147,12 +147,6 @@ namespace AlgorithmsDataStructures2
                 return false; // если узел не найден
             }
 
-            if (searchResult.Node == Root)
-            {
-                Root = null;
-                return true;
-            }
-
             BSTNode<T> ancestorNode = null;
             if (searchResult.Node.RightChild != null)
             {
@@ -161,20 +155,17 @@ namespace AlgorithmsDataStructures2
                 {
                     ancestorNode = ancestorNode.LeftChild;
                 }
-            } else if (searchResult.Node.LeftChild != null)
+            }
+            else if (searchResult.Node.LeftChild != null)
             {
                 ancestorNode = searchResult.Node.LeftChild;
-            }
-
-            if(ancestorNode == ancestorNode.Parent.LeftChild)
-            {
-                ancestorNode.Parent.LeftChild = null;
             } else
             {
-                ancestorNode.Parent.RightChild = null;
+                AttachNewChildToParent(searchResult.Node, ancestorNode, searchResult.Node.Parent);
+                return true;
             }
 
-            ancestorNode.Parent = searchResult.Node.Parent;
+            ancestorNode.Parent = searchResult.Node.Parent; //исключение при удалении листа
             
             ancestorNode.LeftChild = searchResult.Node.LeftChild;
             if (searchResult.Node.LeftChild != null)
@@ -188,14 +179,26 @@ namespace AlgorithmsDataStructures2
                 searchResult.Node.RightChild.Parent = ancestorNode;
             }
 
-            if (searchResult.Node == searchResult.Node.Parent.LeftChild)
-            {
-                searchResult.Node.Parent.LeftChild = ancestorNode;
-            } else
-            {
-                searchResult.Node.Parent.RightChild = ancestorNode;
-            }
+            AttachNewChildToParent(searchResult.Node, ancestorNode, searchResult.Node.Parent);
             return true;
+        }
+
+        private void AttachNewChildToParent(BSTNode<T> oldNode, BSTNode<T> newNode, BSTNode<T> Parent)
+        {
+            if (Parent == null || oldNode == Root)
+            {
+                Root = newNode;
+                return;
+            }
+
+            if (oldNode == Parent.LeftChild)
+            {
+                Parent.LeftChild = newNode;
+            }
+            else
+            {
+                Parent.RightChild = newNode;
+            }
         }
 
         public int Count()
