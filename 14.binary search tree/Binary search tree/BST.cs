@@ -159,21 +159,28 @@ namespace AlgorithmsDataStructures2
             else if (searchResult.Node.LeftChild != null)
             {
                 ancestorNode = searchResult.Node.LeftChild;
-            } else
+            } else //удаление листа
             {
                 AttachNewChildToParent(searchResult.Node, ancestorNode, searchResult.Node.Parent);
                 return true;
             }
 
-            ancestorNode.Parent = searchResult.Node.Parent; //исключение при удалении листа
-            
-            ancestorNode.LeftChild = searchResult.Node.LeftChild;
+            ancestorNode.Parent.LeftChild = ancestorNode.RightChild;
+            ancestorNode.Parent = searchResult.Node.Parent;
+
+            if (ancestorNode != searchResult.Node.LeftChild)
+            {
+                ancestorNode.LeftChild = searchResult.Node.LeftChild;
+            }
             if (searchResult.Node.LeftChild != null)
             {
                 searchResult.Node.LeftChild.Parent = ancestorNode;
             }
 
-            ancestorNode.RightChild = searchResult.Node.RightChild;
+            if (ancestorNode != searchResult.Node.RightChild)
+            {
+                ancestorNode.RightChild = searchResult.Node.RightChild;
+            }
             if (searchResult.Node.RightChild != null)
             {
                 searchResult.Node.RightChild.Parent = ancestorNode;
@@ -185,7 +192,7 @@ namespace AlgorithmsDataStructures2
 
         private void AttachNewChildToParent(BSTNode<T> oldNode, BSTNode<T> newNode, BSTNode<T> Parent)
         {
-            if (Parent == null || oldNode == Root)
+            if (Parent == null)
             {
                 Root = newNode;
                 return;
@@ -203,29 +210,22 @@ namespace AlgorithmsDataStructures2
 
         public int Count()
         {
-            if (Root == null)
+            return InDepthTraversing(Root);
+        }
+
+        private int InDepthTraversing(BSTNode<T> node)
+        {
+            if (node == null)
             {
                 return 0;
             }
 
-            int counter = 1;
-            return InDepthTraversing(Root, counter);
+            int leftCount = InDepthTraversing(node.LeftChild);
+            int rightCount = InDepthTraversing(node.RightChild);
+
+            return 1 + leftCount + rightCount;
         }
 
-        private int InDepthTraversing(BSTNode<T> node, int counter)
-        {
-            if (node.LeftChild != null)
-            {
-                counter = InDepthTraversing(node.LeftChild, ++counter);
-            }
-
-            if (node.RightChild != null)
-            {
-                counter = InDepthTraversing(node.RightChild, ++counter);
-            }
-
-            return counter;
-        }
 
     }
 }
