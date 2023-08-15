@@ -21,6 +21,13 @@ namespace AlgorithmsDataStructures2
         }
     }
 
+    public enum Options
+    {
+        PREORDER,
+        INORDER,
+        POSTORDER
+    }
+
     // промежуточный результат поиска
     public class BSTFind<T>
     {
@@ -226,6 +233,89 @@ namespace AlgorithmsDataStructures2
             return 1 + leftCount + rightCount;
         }
 
+        public List<BSTNode<T>> WideAllNodes()
+        {
+            List<BSTNode<T>> result = new List<BSTNode<T>>();
 
+            if (Root == null)
+            {
+                return result;
+            }
+
+            Queue<BSTNode<T>> nodes = new Queue<BSTNode<T>>();
+            nodes.Enqueue(Root);
+
+            while (nodes.Count != 0)
+            {
+                BSTNode<T> currentElement = nodes.Dequeue();
+                result.Add(currentElement);
+
+                if (currentElement.LeftChild != null)
+                {
+                    nodes.Enqueue(currentElement.LeftChild);
+                }
+
+                if (currentElement.RightChild != null)
+                {
+                    nodes.Enqueue(currentElement.RightChild);
+                }
+            }
+
+            return result;
+        }
+
+        public List<BSTNode<T>> DeepAllNodes(int option)
+        {
+            List<BSTNode<T>> result = new List<BSTNode<T>>();
+
+            if (Root == null)
+            {
+                return result;
+            }
+
+            switch (option) {
+                case (int)Options.PREORDER:
+                    PreOrderTraversal(result, Root);
+                    break;
+                case (int)Options.INORDER:
+                    InOrderTraversal(result, Root);
+                    break;
+                case (int)Options.POSTORDER:
+                    PostOrderTraversal(result, Root);
+                    break;
+            }
+
+            return result;
+        }
+
+        private void PreOrderTraversal(List<BSTNode<T>> result, BSTNode<T> node)
+        {
+            if (node != null)
+            {
+                result.Add(node);
+                PreOrderTraversal(result, node.LeftChild);
+                PreOrderTraversal(result, node.RightChild);
+            }
+        }
+
+        private void InOrderTraversal(List<BSTNode<T>> result, BSTNode<T> node)
+        {
+            if (node != null)
+            {
+                InOrderTraversal(result, node.LeftChild);
+                result.Add(node);
+                InOrderTraversal(result, node.RightChild);
+            }
+        }
+
+        private void PostOrderTraversal(List<BSTNode<T>> result, BSTNode<T> node)
+        {
+            if (node != null)
+            {
+                PostOrderTraversal(result, node.LeftChild);
+                PostOrderTraversal(result, node.RightChild);
+                result.Add(node);
+            }
+        }
     }
 }
