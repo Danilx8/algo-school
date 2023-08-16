@@ -123,5 +123,47 @@ namespace BST_test
             tree.AddKeyValue(15, 15);
             Assert.AreEqual(4, tree.Count());
         }
+
+        [TestMethod]
+        public void WideTest()
+        {
+            Assert.AreEqual(0, emptyTree.WideAllNodes().Count);
+
+            emptyTree.AddKeyValue(5, 5);
+            for (int i = 0; i < 5; ++i)
+            {
+                emptyTree.AddKeyValue(i, i);
+            }
+
+            for (int i = 6; i < 10; ++i)
+            {
+                emptyTree.AddKeyValue(i, i);
+            }
+
+            Assert.AreEqual(10, emptyTree.WideAllNodes().Count);
+        }
+
+        [TestMethod]
+        [DataRow(0)]
+        [DataRow(1)]
+        [DataRow(2)]
+        public void DeepTest(int option)
+        {
+            Assert.AreEqual(0, emptyTree.DeepAllNodes(option).Count);
+
+            emptyTree.AddKeyValue(5, 5);
+
+            for (int i = 0; i < 5; ++i)
+            {
+                emptyTree.AddKeyValue(i, i);
+            }
+
+            for (int i = 6; i < 10; ++i)
+            {
+                emptyTree.AddKeyValue(i, i);
+            }
+
+            Assert.AreEqual(10, emptyTree.DeepAllNodes(option).Count);
+        }
     }
 }

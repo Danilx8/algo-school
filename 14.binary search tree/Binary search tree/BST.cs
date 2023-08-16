@@ -19,22 +19,29 @@ namespace AlgorithmsDataStructures2
             LeftChild = null;
             RightChild = null;
         }
+
+        public static explicit operator BSTNode (BSTNode<T> node)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            if (node.GetType() != typeof(BSTNode<int>))
+            {
+                throw new Exception("Значение должно быть int");
+            }
+
+            BSTNode newNode = new BSTNode(node.NodeKey, Convert.ToInt32(node.NodeValue), null);
+            
+            return newNode;
+        }
     }
 
-    public class BSTNode {
-        public int NodeKey; // ключ узла
-        public int NodeValue; // значение в узле
-        public BSTNode Parent; // родитель или null для корня
-        public BSTNode LeftChild; // левый потомок
-        public BSTNode RightChild; // правый потомок	
-
-        public BSTNode(int key, int val, BSTNode parent)
+    public class BSTNode : BSTNode<int> //класс для получения всех узлов дерева в необобщённом виде
+    {
+        public BSTNode(int key, int val, BSTNode<int> parent) : base(key, val, parent)
         {
-            NodeKey = key;
-            NodeValue = val;
-            Parent = parent;
-            LeftChild = null;
-            RightChild = null;
         }
     }
 
@@ -259,13 +266,13 @@ namespace AlgorithmsDataStructures2
                 return result;
             }
 
-            Queue<BSTNode> nodes = new Queue<BSTNode>();
-            nodes.Enqueue(Root as BSTNode);
+            Queue<BSTNode<T>> nodes = new Queue<BSTNode<T>>();
+            nodes.Enqueue(Root);
 
             while (nodes.Count != 0)
             {
-                BSTNode currentElement = nodes.Dequeue();
-                result.Add(currentElement);
+                BSTNode<T> currentElement = nodes.Dequeue();
+                result.Add((BSTNode)currentElement);
 
                 if (currentElement.LeftChild != null)
                 {
@@ -292,46 +299,46 @@ namespace AlgorithmsDataStructures2
 
             switch (option) {
                 case (int)Options.PREORDER:
-                    PreOrderTraversal(result, Root as BSTNode);
+                    PreOrderTraversal(result, Root);
                     break;
                 case (int)Options.INORDER:
-                    InOrderTraversal(result, Root as BSTNode);
+                    InOrderTraversal(result, Root);
                     break;
                 case (int)Options.POSTORDER:
-                    PostOrderTraversal(result, Root as BSTNode);
+                    PostOrderTraversal(result, Root);
                     break;
             }
 
             return result;
         }
 
-        private void PreOrderTraversal(List<BSTNode> result, BSTNode node)
+        private void PreOrderTraversal(List<BSTNode> result, BSTNode<T> node)
         {
             if (node != null)
             {
-                result.Add(node);
+                result.Add((BSTNode)node);
                 PreOrderTraversal(result, node.LeftChild);
                 PreOrderTraversal(result, node.RightChild);
             }
         }
 
-        private void InOrderTraversal(List<BSTNode> result, BSTNode node)
+        private void InOrderTraversal(List<BSTNode> result, BSTNode<T> node)
         {
             if (node != null)
             {
                 InOrderTraversal(result, node.LeftChild);
-                result.Add(node);
+                result.Add((BSTNode)node);
                 InOrderTraversal(result, node.RightChild);
             }
         }
 
-        private void PostOrderTraversal(List<BSTNode> result, BSTNode node)
+        private void PostOrderTraversal(List<BSTNode> result, BSTNode<T> node)
         {
             if (node != null)
             {
                 PostOrderTraversal(result, node.LeftChild);
                 PostOrderTraversal(result, node.RightChild);
-                result.Add(node);
+                result.Add((BSTNode)node);
             }
         }
     }
