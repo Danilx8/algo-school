@@ -47,9 +47,9 @@ namespace AlgorithmsDataStructures2
 
     public enum Options
     {
-        PREORDER,
         INORDER,
-        POSTORDER
+        POSTORDER,
+        PREORDER
     }
 
     // промежуточный результат поиска
