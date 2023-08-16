@@ -250,71 +250,89 @@ namespace AlgorithmsDataStructures2
             return 1 + leftCount + rightCount;
         }
 
-        public List<BSTNode<T>> WideAllNodes()
+        public List<BSTNode> WideAllNodes()
         {
-            List<BSTNode<T>> Nodes = new List<BSTNode<T>>();
-            if (Root == null) return Nodes;
+            List<BSTNode> result = new List<BSTNode>();
 
-            BSTNode<T> node = Root;
-
-            List<BSTNode<T>> listTemp = new List<BSTNode<T>>();
-            listTemp.Add(node);
-
-            while (listTemp.Count != 0)
+            if (Root == null)
             {
-                node = listTemp[listTemp.Count - 1];
-                Nodes.Add(node);
-                listTemp.RemoveAt(listTemp.Count - 1);
+                return result;
+            }
 
-                if (node.LeftChild != null)
+            Queue<BSTNode> nodes = new Queue<BSTNode>();
+            nodes.Enqueue(Root as BSTNode);
+
+            while (nodes.Count != 0)
+            {
+                BSTNode currentElement = nodes.Dequeue();
+                result.Add(currentElement);
+
+                if (currentElement.LeftChild != null)
                 {
-                    listTemp.Insert(0, node.LeftChild);
+                    nodes.Enqueue(currentElement.LeftChild);
                 }
-                if (node.RightChild != null)
+
+                if (currentElement.RightChild != null)
                 {
-                    listTemp.Insert(0, node.RightChild);
+                    nodes.Enqueue(currentElement.RightChild);
                 }
             }
 
-            return Nodes;
+            return result;
         }
 
-        // метод-обёртка для вызова рекурсивного метода обхода в глубину
-        public List<BSTNode<T>> DeepAllNodes(int orderType)
+        public List<BSTNode> DeepAllNodes(int option)
         {
-            return RecursiveDeep(Root, orderType);
+            List<BSTNode> result = new List<BSTNode>();
+
+            if (Root == null)
+            {
+                return result;
+            }
+
+            switch (option) {
+                case (int)Options.PREORDER:
+                    PreOrderTraversal(result, Root as BSTNode);
+                    break;
+                case (int)Options.INORDER:
+                    InOrderTraversal(result, Root as BSTNode);
+                    break;
+                case (int)Options.POSTORDER:
+                    PostOrderTraversal(result, Root as BSTNode);
+                    break;
+            }
+
+            return result;
         }
 
-        // вспомогательный метод обхода в глубину 
-        private List<BSTNode<T>> RecursiveDeep(BSTNode<T> FromNode, int orderType)
+        private void PreOrderTraversal(List<BSTNode> result, BSTNode node)
         {
-            BSTNode<T> node = FromNode;
-            List<BSTNode<T>> nodes = new List<BSTNode<T>>();
-
             if (node != null)
             {
-                switch (orderType)
-                {
-                    case 0: // in-order
-                        nodes.AddRange(RecursiveDeep(node.LeftChild, orderType));
-                        nodes.Add(node);
-                        nodes.AddRange(RecursiveDeep(node.RightChild, orderType));
-                        break;
-                    case 1: // post-order
-                        nodes.AddRange(RecursiveDeep(node.LeftChild, orderType));
-                        nodes.AddRange(RecursiveDeep(node.RightChild, orderType));
-                        nodes.Add(node);
-                        break;
-                    case 2: // pre-order
-                        nodes.Add(node);
-                        nodes.AddRange(RecursiveDeep(node.LeftChild, orderType));
-                        nodes.AddRange(RecursiveDeep(node.RightChild, orderType));
-                        break;
-                    default: return null;
-                }
+                result.Add(node);
+                PreOrderTraversal(result, node.LeftChild);
+                PreOrderTraversal(result, node.RightChild);
             }
+        }
 
-            return nodes;
+        private void InOrderTraversal(List<BSTNode> result, BSTNode node)
+        {
+            if (node != null)
+            {
+                InOrderTraversal(result, node.LeftChild);
+                result.Add(node);
+                InOrderTraversal(result, node.RightChild);
+            }
+        }
+
+        private void PostOrderTraversal(List<BSTNode> result, BSTNode node)
+        {
+            if (node != null)
+            {
+                PostOrderTraversal(result, node.LeftChild);
+                PostOrderTraversal(result, node.RightChild);
+                result.Add(node);
+            }
         }
     }
 }
