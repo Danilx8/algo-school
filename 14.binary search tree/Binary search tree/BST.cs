@@ -21,6 +21,23 @@ namespace AlgorithmsDataStructures2
         }
     }
 
+    public class BSTNode {
+        public int NodeKey; // ключ узла
+        public int NodeValue; // значение в узле
+        public BSTNode Parent; // родитель или null для корня
+        public BSTNode LeftChild; // левый потомок
+        public BSTNode RightChild; // правый потомок	
+
+        public BSTNode(int key, int val, BSTNode parent)
+        {
+            NodeKey = key;
+            NodeValue = val;
+            Parent = parent;
+            LeftChild = null;
+            RightChild = null;
+        }
+    }
+
     public enum Options
     {
         PREORDER,
@@ -233,21 +250,21 @@ namespace AlgorithmsDataStructures2
             return 1 + leftCount + rightCount;
         }
 
-        public List<BSTNode<T>> WideAllNodes()
+        public List<BSTNode> WideAllNodes()
         {
-            List<BSTNode<T>> result = new List<BSTNode<T>>();
+            List<BSTNode> result = new List<BSTNode>();
 
             if (Root == null)
             {
                 return result;
             }
 
-            Queue<BSTNode<T>> nodes = new Queue<BSTNode<T>>();
-            nodes.Enqueue(Root);
+            Queue<BSTNode> nodes = new Queue<BSTNode>();
+            nodes.Enqueue(Root as BSTNode);
 
             while (nodes.Count != 0)
             {
-                BSTNode<T> currentElement = nodes.Dequeue();
+                BSTNode currentElement = nodes.Dequeue();
                 result.Add(currentElement);
 
                 if (currentElement.LeftChild != null)
@@ -264,9 +281,9 @@ namespace AlgorithmsDataStructures2
             return result;
         }
 
-        public List<BSTNode<T>> DeepAllNodes(int option)
+        public List<BSTNode> DeepAllNodes(int option)
         {
-            List<BSTNode<T>> result = new List<BSTNode<T>>();
+            List<BSTNode> result = new List<BSTNode>();
 
             if (Root == null)
             {
@@ -275,20 +292,20 @@ namespace AlgorithmsDataStructures2
 
             switch (option) {
                 case (int)Options.PREORDER:
-                    PreOrderTraversal(result, Root);
+                    PreOrderTraversal(result, Root as BSTNode);
                     break;
                 case (int)Options.INORDER:
-                    InOrderTraversal(result, Root);
+                    InOrderTraversal(result, Root as BSTNode);
                     break;
                 case (int)Options.POSTORDER:
-                    PostOrderTraversal(result, Root);
+                    PostOrderTraversal(result, Root as BSTNode);
                     break;
             }
 
             return result;
         }
 
-        private void PreOrderTraversal(List<BSTNode<T>> result, BSTNode<T> node)
+        private void PreOrderTraversal(List<BSTNode> result, BSTNode node)
         {
             if (node != null)
             {
@@ -298,7 +315,7 @@ namespace AlgorithmsDataStructures2
             }
         }
 
-        private void InOrderTraversal(List<BSTNode<T>> result, BSTNode<T> node)
+        private void InOrderTraversal(List<BSTNode> result, BSTNode node)
         {
             if (node != null)
             {
@@ -308,7 +325,7 @@ namespace AlgorithmsDataStructures2
             }
         }
 
-        private void PostOrderTraversal(List<BSTNode<T>> result, BSTNode<T> node)
+        private void PostOrderTraversal(List<BSTNode> result, BSTNode node)
         {
             if (node != null)
             {
