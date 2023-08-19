@@ -33,5 +33,11 @@ namespace Balanced_BST_test
 
             CollectionAssert.AreEqual(expectedOutput, BalancedBST.GenerateBBSTArray(input));
         }
+
+        [TestMethod]
+        public void SingleElementTest()
+        {
+            CollectionAssert.AreEqual(new int[] { 1 }, BalancedBST.GenerateBBSTArray(new int[] { 1 }));
+        }
     }
 }
