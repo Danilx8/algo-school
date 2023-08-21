@@ -83,44 +83,37 @@ namespace AlgorithmsDataStructures2
 
         private bool AreSubtreesLengthsEqual(BSTNode node)
         {
-            bool result;
-
-            int leftLength = CalculateSubTreeDepth(node.LeftChild, 0, true);
-            int rightLength = CalculateSubTreeDepth(node.RightChild, 0, false);
+            int leftLength = CalculateSubTreeDepth(node.LeftChild, 0);
+            int rightLength = CalculateSubTreeDepth(node.RightChild, 0);
 
             if (Math.Abs(leftLength - rightLength) > 1)
             {
                 return false;
             }
 
-            if (leftLength == 0 && rightLength == 0)
-            {
-                return true;
-            }
-
-            result = AreSubtreesLengthsEqual(node.LeftChild) && AreSubtreesLengthsEqual(node.RightChild);
-
-            return result;
+            return true;
         }
 
-        private int CalculateSubTreeDepth(BSTNode node, int counter, bool leftDirection)
+        private int CalculateSubTreeDepth(BSTNode node, int counter)
         {
-            if (node == null)
+            if (node == null || node.LeftChild == null && node.RightChild == null)
             {
                 return counter;
             }
 
-            if (leftDirection && node.LeftChild != null)
+            int leftSum = 0, rightSum = 0;
+
+            if (node.LeftChild != null)
             {
-                CalculateSubTreeDepth(node.LeftChild, ++counter, leftDirection);
+                leftSum = CalculateSubTreeDepth(node.LeftChild, ++counter);
             }
 
-            if (!leftDirection && node.RightChild != null)
+            if (node.RightChild != null)
             {
-                CalculateSubTreeDepth(node.RightChild, ++counter, leftDirection);
+                rightSum = CalculateSubTreeDepth(node.RightChild, ++counter);
             }
 
-            return counter;
+            return leftSum + rightSum;
         }
     }
 }

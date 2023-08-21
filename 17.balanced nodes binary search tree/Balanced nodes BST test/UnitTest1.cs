@@ -140,5 +140,20 @@ namespace Balanced_nodes_BST_test
 
             return true;
         }
+
+        [TestMethod]
+        public void CheckUnbalancedTree()
+        {
+            BSTNode node = new BSTNode(0, null);
+            BSTNode root = node;
+            for (int i = 1; i < 10; ++i)
+            {
+                BSTNode newNode = new BSTNode(i, node);
+                node.RightChild = newNode;
+                node = newNode;
+            }
+
+            Assert.IsFalse(oddLengthTree.IsBalanced(root));
+        }
     }
 }
