@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heap", "Heap.csproj", "{2CB1D9D3-5C82-4525-ACBA-DE785EB3C098}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heap test", "..\Heap test\Heap test.csproj", "{DBFA2EB7-F2AB-4E31-A94B-7C82B7AECC6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2CB1D9D3-5C82-4525-ACBA-DE785EB3C098}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CB1D9D3-5C82-4525-ACBA-DE785EB3C098}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CB1D9D3-5C82-4525-ACBA-DE785EB3C098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBFA2EB7-F2AB-4E31-A94B-7C82B7AECC6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBFA2EB7-F2AB-4E31-A94B-7C82B7AECC6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBFA2EB7-F2AB-4E31-A94B-7C82B7AECC6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBFA2EB7-F2AB-4E31-A94B-7C82B7AECC6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
