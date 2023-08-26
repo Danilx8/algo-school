@@ -159,7 +159,53 @@ namespace AlgorithmsDataStructures2
 
         public List<T> EvenTrees()
         {
-            return null;
+            Dictionary<SimpleTreeNode<T>, int> nodesBonds = new Dictionary<SimpleTreeNode<T>, int>();
+            List<T> result = new List<T>();
+
+            if (Root != null)
+            {
+                PostOrderDepthTraversal(Root, nodesBonds);
+            }
+
+            if (nodesBonds.Count % 2 == 0 && nodesBonds.Count != 0)
+            {
+                foreach (var bond in nodesBonds)
+                {
+                    if (bond.Key.Parent != null && bond.Value % 2 == 0)
+                    {
+                        result.Add(bond.Key.Parent.NodeValue);
+                        result.Add(bond.Key.NodeValue);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private void PostOrderDepthTraversal(SimpleTreeNode<T> node, Dictionary<SimpleTreeNode<T>, int> weights)
+        {
+            if (node.Children != null)
+            {
+                foreach (SimpleTreeNode<T> child in node.Children)
+                {
+                    PostOrderDepthTraversal(child, weights);
+                }
+
+                weights.Add(node, 1 + weights.Sum(current =>
+                {
+                    if (node.Children.Contains(current.Key))
+                    {
+                        return current.Value;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }));
+            } else
+            {
+                weights.Add(node, 1);
+            }
         }
     }
 }

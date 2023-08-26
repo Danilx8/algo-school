@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Even forests", "Even forests.csproj", "{A9B97868-BB86-43D3-B908-409797BFB947}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Even forest test", "..\Even forest test\Even forest test.csproj", "{0A1F2DFB-2D6F-4093-9FED-3550A7A29E7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A9B97868-BB86-43D3-B908-409797BFB947}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9B97868-BB86-43D3-B908-409797BFB947}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9B97868-BB86-43D3-B908-409797BFB947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A1F2DFB-2D6F-4093-9FED-3550A7A29E7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A1F2DFB-2D6F-4093-9FED-3550A7A29E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A1F2DFB-2D6F-4093-9FED-3550A7A29E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A1F2DFB-2D6F-4093-9FED-3550A7A29E7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
