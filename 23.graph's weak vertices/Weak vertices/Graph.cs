@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace AlgorithmsDataStructures2
 {
@@ -167,7 +168,51 @@ namespace AlgorithmsDataStructures2
         public List<Vertex<T>> WeakVertices()
         {
             // возвращает список узлов вне треугольников
-            return null;
+            Dictionary<int, List<int>> nodesPairs = new Dictionary<int, List<int>>();
+            List<Vertex<T>> result = new List<Vertex<T>>();
+
+            for (int i = 0; i < max_vertex; ++i)
+            {
+                nodesPairs.Add(i, new List<int>());
+            }
+
+            for (int i = 0; i < max_vertex; ++i)
+            {
+                for (int j = 0; j < i + 1; ++j)
+                {
+                    if (m_adjacency[i, j] == 1)
+                    {
+                        nodesPairs[i].Add(j);
+                        nodesPairs[j].Add(i);
+                    }
+                }
+            }
+
+            foreach (var pair in nodesPairs)
+            {
+                if (!CheckTriangle(pair.Value, nodesPairs))
+                {
+                    result.Add(vertex[pair.Key]);
+                }
+            }
+
+            return result;
+        }
+
+        private bool CheckTriangle(List<int> connectedNodes, Dictionary<int, List<int>> pairs)
+        {
+            for (int i = 0; i < connectedNodes.Count; ++i)
+            {
+                for (int j = i + 1; j < connectedNodes.Count; ++j)
+                {
+                    if (pairs[connectedNodes[i]].Contains(connectedNodes[j]))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
