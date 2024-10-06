@@ -55,9 +55,6 @@ class LinkedList:
 
         previous_node = None
         while node is not None:  # Delete node(s) in middle
-            if node.value == val and not all:
-                previous_node.next = node.next
-                return
             while node is not None and node.value != val:
                 previous_node = node
                 node = node.next
@@ -69,6 +66,9 @@ class LinkedList:
             node = previous_node.next
             if previous_node.next is None:
                 self.tail = previous_node
+
+            if not all:
+                break
 
     def clean(self):
         node = self.head
