@@ -89,15 +89,16 @@ class LinkedList:
         return count
 
     def insert(self, afterNode, newNode):
-        node = self.head
-
-        if self.tail == afterNode:
+        if self.head is None:
             self.add_in_tail(newNode)
-            return
-
-        while node is not None and node.next is not None:
+        node = self.head
+        while node is not None:
             if node == afterNode:
                 newNode.next = node.next
                 node.next = newNode
-                return
+                if node.next.next is None:
+                    self.tail = node.next
+                break
             node = node.next
+        return
+
