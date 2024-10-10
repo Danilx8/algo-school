@@ -76,11 +76,12 @@ class LinkedListTestCase(unittest.TestCase):
         node2 = Node(2)
         node3 = Node(3)
         self.linked_list.add_in_tail(node1)
-        self.linked_list.add_in_tail(node2)
-        self.linked_list.insert(node1, node3)
-        self.assertEqual(node1.next, node3)
-        self.assertEqual(node3.next, node2)
-
+        self.linked_list.insert(None, node2)
+        self.assertEqual(self.linked_list.head, node2)
+        self.assertEqual(node2.next, node1)
+        self.assertEqual(self.linked_list.tail, node1)
+        self.linked_list.insert(node2, node3)
+        self.assertEqual(self.linked_list.head.next, node3)
 
 if __name__ == '__main__':
     unittest.main()
