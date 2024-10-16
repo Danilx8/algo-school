@@ -60,7 +60,7 @@ class LinkedList2:
             if node is None:
                 return
 
-            before.next = node
+            before.next = node.next
             node = node.next
             if node is None:
                 self.tail = before
