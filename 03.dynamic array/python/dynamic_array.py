@@ -51,14 +51,18 @@ class DynArray:
 
     def delete(self, i):
         if i < 0 or i >= self.count:
-            raise IndexError('Index out of bounds')
+            raise IndexError('Index is out of bounds')
+        else:
+            new_array = self.make_array(self.capacity)
+            for j in range(i):
+                new_array[j] = self.array[j]
+            for j in range(i, self.count - 1):
+                new_array[j] = self.array[j + 1]
+            self.array = new_array
+            self.count -= 1
 
-        for i in range(i, self.count - 1):
-            self.array[i] = self.array[i + 1]
-        self.array[self.count - 1] = None
-        self.count -= 1
-
-        if self.count < self.capacity * 0.5 and self.capacity > 16:
-            self.resize(max(self.capacity / 1.5, 16))
-
-        # удаляем объект в позиции i
+            if self.count < self.capacity / 2 and self.capacity > 16:
+                if int(self.capacity / 1.5) >= 16:
+                    self.resize(int(self.capacity / 1.5))
+                else:
+                    self.resize(16)
