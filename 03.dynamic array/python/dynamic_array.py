@@ -58,7 +58,7 @@ class DynArray:
         self.array[self.count - 1] = None
         self.count -= 1
 
-        if self.count < self.capacity * 0.5:
-            self.resize(max(self.capacity * 0.5, 16))
+        if self.count < self.capacity * 0.5 and self.capacity > 16:
+            self.resize(max(self.capacity / 1.5, 16))
 
         # удаляем объект в позиции i
