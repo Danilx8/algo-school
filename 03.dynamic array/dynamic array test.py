@@ -1,6 +1,5 @@
 import unittest
 from python.dynamic_array import DynArray
-from random import randint
 
 
 class MyTestCase(unittest.TestCase):
@@ -13,6 +12,11 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(array[i], i * 2)
 
         self.assertEqual(array.capacity, 16)
+
+    def test_insert_empty(self):
+        array = DynArray()
+        array.insert(0, 0)
+        self.assertEqual(array[0], 0)
 
 
 if __name__ == '__main__':
