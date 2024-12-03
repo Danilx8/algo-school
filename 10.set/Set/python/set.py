@@ -12,22 +12,24 @@ class HashNode:
 class PowerSet:
     def __init__(self) -> None:
         # ваша реализация хранилища
-        self.size = 20_000
+        self.Size = 20_000
         self.step = 3
         self.count = 0
-        self.slots = [HashNode(None) for _ in range(self.size)]
+        self.slots = [HashNode(None) for _ in range(self.Size)]
 
     def hash_fun(self, value):
-        return abs(hash(value)) % self.size
+        return abs(hash(value)) % self.Size
 
     def seek_slot(self, value):
         index = self.hash_fun(value)
 
-        for checked in range(self.size):
+        for checked in range(self.Size):
             if self.slots[index].value == value:
                 return index
 
-            index = (index + self.step) % self.size
+            index = (index + self.step) % self.Size
+
+        return -1
 
     def size(self) -> int:
         # количество элементов в множестве
@@ -35,10 +37,9 @@ class PowerSet:
 
     def put(self, value: Any) -> None:
         # всегда срабатывает
-        index = self.hash_fun(value)
-
-        while self.slots[index].value is not None:
-            index = (index + self.step) % self.size
+        index = self.seek_slot(value)
+        if index == -1:
+            return
 
         self.slots[index].value = value
         self.count += 1
@@ -48,13 +49,13 @@ class PowerSet:
         # иначе False
         index = self.hash_fun(value)
 
-        for checked in range(self.size):
+        for checked in range(self.Size):
             if self.slots[index].value == value:
                 return True
             if self.slots[index].value is None and not self.slots[index].deleted:
                 return False
 
-            index = (index + self.step) % self.size
+            index = (index + self.step) % self.Size
 
         return False
 
@@ -63,14 +64,14 @@ class PowerSet:
         # иначе False
         index = self.hash_fun(value)
 
-        for checked in range(self.size):
+        for checked in range(self.Size):
             if self.slots[index].value is not None and self.slots[index].value == value:
                 self.slots[index].value = None
                 self.slots[index].deleted = True
                 self.count -= 1
                 return True
 
-            index = (index + self.step) % self.size
+            index = (index + self.step) % self.Size
 
         return False
 
@@ -78,7 +79,7 @@ class PowerSet:
         # пересечение текущего множества и set2
         result = PowerSet()
 
-        for checked in range(self.size):
+        for checked in range(self.Size):
             current_value = self.slots[checked].value
             if current_value is not None and current_value == set2.get(self.slots[checked].value):
                 result.put(self.slots[checked].value)
@@ -89,7 +90,7 @@ class PowerSet:
         # объединение текущего множества и set2
         result = PowerSet()
 
-        for checked in range(self.size):
+        for checked in range(self.Size):
             if self.slots[checked].value is not None:
                 result.put(self.slots[checked].value)
             if set2.slots[checked].value is not None:
@@ -102,11 +103,11 @@ class PowerSet:
         result = PowerSet()
         first_values = []
 
-        for checked in range(self.size):
+        for checked in range(self.Size):
             if self.slots[checked].value is not None:
                 first_values.append(self.slots[checked].value)
 
-        for checked in range(self.size):
+        for checked in range(self.Size):
             if set2.slots[checked].value is not None and set2.slots[checked].value in first_values:
                 first_values.remove(set2.slots[checked].value)
 
@@ -129,7 +130,7 @@ class PowerSet:
         # возвращает True,
         # если set2 равно текущему множеству,
         # иначе False
-        for index in range(self.size):
+        for index in range(self.Size):
             if self.slots[index].value != set2.slots[index].value:
                 return False
         return True
