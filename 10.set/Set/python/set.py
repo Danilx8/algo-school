@@ -14,7 +14,6 @@ class PowerSet:
         # ваша реализация хранилища
         self.Size = 20_000
         self.step = 3
-        self.count = 0
         self.slots = [HashNode(None) for _ in range(self.Size)]
 
     def hash_fun(self, value):
@@ -32,8 +31,11 @@ class PowerSet:
         return -1
 
     def size(self) -> int:
-        # количество элементов в множестве
-        return self.count
+        size = 0
+        for i in self.slots:
+            if i is not None:
+                size += 1
+        return size
 
     def put(self, value: Any) -> None:
         # всегда срабатывает
@@ -42,7 +44,6 @@ class PowerSet:
             return
 
         self.slots[index].value = value
-        self.count += 1
 
     def get(self, value: Any) -> bool:
         # возвращает True если value имеется в множестве,
@@ -68,7 +69,6 @@ class PowerSet:
             if self.slots[index].value is not None and self.slots[index].value == value:
                 self.slots[index].value = None
                 self.slots[index].deleted = True
-                self.count -= 1
                 return True
 
             index = (index + self.step) % self.Size
