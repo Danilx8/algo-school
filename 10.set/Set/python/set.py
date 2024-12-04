@@ -33,7 +33,7 @@ class PowerSet:
     def size(self) -> int:
         size = 0
         for i in self.slots:
-            if i is not None:
+            if i.value is not None and i.value is False:
                 size += 1
         return size
 
