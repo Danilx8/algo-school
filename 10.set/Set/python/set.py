@@ -23,7 +23,10 @@ class PowerSet:
         index = self.hash_fun(value)
 
         for checked in range(self.Size):
-            if self.slots[index].value == value:
+            if self.slots[checked].value == value:
+                return -1
+
+            if self.slots[index].value is None:
                 return index
 
             index = (index + self.step) % self.Size
@@ -33,17 +36,21 @@ class PowerSet:
     def size(self) -> int:
         size = 0
         for i in self.slots:
-            if i.value is not None and i.value is False:
+            if i.value is not None and i.deleted is False:
                 size += 1
         return size
 
     def put(self, value: Any) -> None:
         # всегда срабатывает
-        index = self.seek_slot(value)
+        index = -1
+        if not self.get(value):
+            index = self.seek_slot(value)
+
         if index == -1:
             return
 
         self.slots[index].value = value
+        self.slots[index].deleted = False
 
     def get(self, value: Any) -> bool:
         # возвращает True если value имеется в множестве,
@@ -81,7 +88,7 @@ class PowerSet:
 
         for checked in range(self.Size):
             current_value = self.slots[checked].value
-            if current_value is not None and current_value == set2.get(self.slots[checked].value):
+            if current_value is not None and current_value == set2.slots[checked].value:
                 result.put(self.slots[checked].value)
 
         return result
