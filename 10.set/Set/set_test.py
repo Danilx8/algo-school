@@ -258,5 +258,34 @@ class SetTest(unittest.TestCase):
         self.assertLess(union_end_time - union_start_time, 2)
         self.assertLess(difference_end_time - difference_start_time, 2)
 
+    def test_cartesian_product_empty_sets(self):
+        resultSet = self.set.cartesian_product(PowerSet())
+        self.assertEqual(0, resultSet.size())
+
+    def test_cartesian_product_non_empty_sets(self):
+        self.set.put("A")
+        self.set.put("B")
+        set2 = PowerSet()
+        set2.put("1")
+        set2.put("2")
+        resultSet = self.set.cartesian_product(set2)
+        self.assertEqual(4, resultSet.size())
+        self.assertTrue(resultSet.get(("A", "1")))
+        self.assertTrue(resultSet.get(("A", "2")))
+        self.assertTrue(resultSet.get(("B", "1")))
+        self.assertTrue(resultSet.get(("B", "2")))
+
+    def test_cartesian_product_large_sets(self):
+        SIZE = 100
+        set2 = PowerSet()
+
+        for i in range(SIZE):
+            self.set.put(str(i))
+            set2.put(str(i))
+
+        resultSet = self.set.cartesian_product(set2)
+        self.assertEqual(SIZE**2, resultSet.size())
+
+
 if __name__ == '__main__':
     unittest.main()

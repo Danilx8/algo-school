@@ -141,3 +141,20 @@ class PowerSet:
             if self.slots[index].value != set2.slots[index].value:
                 return False
         return True
+
+    def cartesian_product(self, set2: PowerSet) -> PowerSet:
+        result = PowerSet()
+
+        for first_checked in self.slots:
+            if first_checked.value is None:
+                continue
+
+            for second_checked in set2.slots:
+                if second_checked.value is None:
+                    continue
+
+                result.put((first_checked.value, second_checked.value))
+
+        return result
+
+
