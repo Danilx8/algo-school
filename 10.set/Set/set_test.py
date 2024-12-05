@@ -1,10 +1,29 @@
 import time
 import unittest
-from python import PowerSet
+from python import PowerSet, multiple_intersection
+
 
 class SetTest(unittest.TestCase):
     def setUp(self):
         self.set = PowerSet()
+
+        self.set1 = PowerSet()
+        self.set2 = PowerSet()
+        self.set3 = PowerSet()
+        self.set4 = PowerSet()
+
+        self.set1.put("A")
+        self.set1.put("B")
+        self.set1.put("C")
+
+        self.set2.put("A")
+        self.set2.put("B")
+
+        self.set3.put("B")
+        self.set3.put("C")
+
+        self.set4.put("A")
+        self.set4.put("C")
 
     def test_add(self):
         self.set.put("John Doe")
@@ -239,7 +258,7 @@ class SetTest(unittest.TestCase):
         for i in range(SIZE):
             self.set.put(str(i))
         set2 = PowerSet()
-        for j in range(SIZE//2, SIZE*3//2):
+        for j in range(SIZE // 2, SIZE * 3 // 2):
             set2.put(str(j))
 
         intersection_start_time = time.time()
@@ -284,7 +303,25 @@ class SetTest(unittest.TestCase):
             set2.put(str(i))
 
         resultSet = self.set.cartesian_product(set2)
-        self.assertEqual(SIZE**2, resultSet.size())
+        self.assertEqual(SIZE ** 2, resultSet.size())
+
+    def test_multiple_intersection_2_sets(self):
+        self.assertRaises(Exception, multiple_intersection, [self.set2])
+
+    def test_multiple_intersection_3_sets(self):
+        result_set = multiple_intersection([self.set1, self.set2, self.set3])
+        expected_set = PowerSet()
+        expected_set.put("B")
+
+        self.assertEqual(1, result_set.size())
+        self.assertTrue(result_set.get("B"))
+        self.assertFalse(result_set.get("A"))
+        self.assertFalse(result_set.get("C"))
+
+    def test_multiple_intersection_4_sets(self):
+        result_set = multiple_intersection([self.set1, self.set2, self.set3, self.set4])
+
+        self.assertEqual(0, result_set.size())
 
 
 if __name__ == '__main__':

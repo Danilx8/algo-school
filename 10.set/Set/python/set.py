@@ -9,6 +9,17 @@ class HashNode:
         self.deleted = False
 
 
+def multiple_intersection(sets: [PowerSet]) -> PowerSet:
+    if len(sets) < 3:
+        raise Exception('Not enough sets')
+
+    result = sets[0]
+    for i in range(1, len(sets)):
+        result = result.intersection(sets[i])
+
+    return result
+
+
 class PowerSet:
     def __init__(self) -> None:
         # ваша реализация хранилища
@@ -156,5 +167,3 @@ class PowerSet:
                 result.put((first_checked.value, second_checked.value))
 
         return result
-
-
