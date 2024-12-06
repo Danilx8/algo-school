@@ -310,8 +310,6 @@ class SetTest(unittest.TestCase):
 
     def test_multiple_intersection_3_sets(self):
         result_set = multiple_intersection([self.set1, self.set2, self.set3])
-        expected_set = PowerSet()
-        expected_set.put("B")
 
         self.assertEqual(1, result_set.size())
         self.assertTrue(result_set.get("B"))

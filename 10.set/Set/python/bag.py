@@ -6,7 +6,6 @@ from typing import Any
 class HashNode:
     def __init__(self, value):
         self.value = value
-        self.deleted = False
         self.repetitions = 0
 
 
@@ -33,7 +32,7 @@ class Bag:
     def size(self) -> int:
         size = 0
         for i in self.slots:
-            if i.value is not None and not i.deleted:
+            if i.value is not None and not i.repetitions == 0:
                 size += i.repetitions
         return size
 
@@ -48,7 +47,6 @@ class Bag:
             self.slots[index].repetitions += 1
         else:
             self.slots[index].value = value
-            self.slots[index].deleted = False
             self.slots[index].repetitions = 1
 
     def remove(self, value: Any) -> None:
@@ -61,7 +59,6 @@ class Bag:
             self.slots[index].repetitions -= 1
         else:
             self.slots[index].value = None
-            self.slots[index].deleted = True
             self.slots[index].repetitions = 0
 
     def print(self) -> None:

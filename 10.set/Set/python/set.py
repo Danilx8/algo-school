@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
-
+from functools import reduce
 
 class HashNode:
     def __init__(self, value):
@@ -13,9 +13,7 @@ def multiple_intersection(sets: [PowerSet]) -> PowerSet:
     if len(sets) < 3:
         raise Exception('Not enough sets')
 
-    result = sets[0]
-    for i in range(1, len(sets)):
-        result = result.intersection(sets[i])
+    result = reduce(lambda x,y: x.intersection(y), sets)
 
     return result
 
