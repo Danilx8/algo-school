@@ -1,29 +1,34 @@
-class ArrayOfBits:
-    BitsPerInt = 32
-
+class BitArray:
     def __init__(self, size):
-        arraySize = (size + ArrayOfBits.BitsPerInt - 1) // ArrayOfBits.BitsPerInt
-        self.data = [0 for _ in range(arraySize)]
+        self.size = size
+        self.arr = [0] * ((size + 31) // 32)  # Use integer division to determine the number of integers needed
+
+    def set(self, index):
+        if index < 0 or index >= self.size:
+            raise IndexError("Index out of bounds")
+        array_index = index // 32
+        bit_offset = index % 32
+        self.arr[array_index] |= 1 << bit_offset
+
+    def clear(self, index):
+        if index < 0 or index >= self.size:
+            raise IndexError("Index out of bounds")
+        array_index = index // 32
+        bit_offset = index % 32
+        self.arr[array_index] &= ~(1 << bit_offset)
 
     def get(self, index):
-        intIndex = index // ArrayOfBits.BitsPerInt
-        bitOffset = index % ArrayOfBits.BitsPerInt
-        return (self.data[intIndex] >> bitOffset) & 1 != 0
-
-    def set(self, index, value):
-        intIndex = index // ArrayOfBits.BitsPerInt
-        bitOffset = index % ArrayOfBits.BitsPerInt
-
-        if value:
-            self.data[intIndex] |= 1 << bitOffset
-        else:
-            self.data[intIndex] &= ~(1 << bitOffset)
+        if index < 0 or index >= self.size:
+            raise IndexError("Index out of bounds")
+        array_index = index // 32
+        bit_offset = index % 32
+        return (self.arr[array_index] >> bit_offset) & 1
 
 
 class BloomFilter:
     def __init__(self, f_len):
         self.filter_len = 32
-        self.array = ArrayOfBits(self.filter_len)
+        self.array = BitArray(f_len)
 
     def hash1(self, str1):
         MULTIPLIER = 17
@@ -48,8 +53,8 @@ class BloomFilter:
         return int(sum_val % self.filter_len)
 
     def add(self, str1):
-        self.array.set(self.hash1(str1), True)
-        self.array.set(self.hash2(str1), True)
+        self.array.set(self.hash1(str1))
+        self.array.set(self.hash2(str1))
 
     def is_value(self, str1):
         return self.array.get(self.hash1(str1)) and self.array.get(self.hash2(str1))
