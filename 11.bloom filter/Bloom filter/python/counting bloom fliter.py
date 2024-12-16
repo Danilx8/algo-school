@@ -1,14 +1,21 @@
-class BitArray:
+class CountingBitArray:
     def __init__(self, size):
         self.size = size
-        self.arr = [0] * ((size + 31) // 32)  # Use integer division to determine the number of integers needed
+        self.arr = [0] * ((size + 31) // 32)
 
     def set(self, index):
         if index < 0 or index >= self.size:
             raise IndexError("Index out of bounds")
         array_index = index // 32
         bit_offset = index % 32
-        self.arr[array_index] |= 1 << bit_offset
+        self.arr[array_index] += 1 << bit_offset
+
+    def clear(self, index):
+        if index < 0 or index >= self.size:
+            raise IndexError("Index out of bounds")
+        array_index = index // 32
+        bit_offset = index % 32
+        self.arr[array_index] -= 1 << bit_offset
 
     def get(self, index):
         if index < 0 or index >= self.size:
@@ -18,10 +25,10 @@ class BitArray:
         return (self.arr[array_index] >> bit_offset) & 1
 
 
-class BloomFilter:
+class CountingBloomFilter:
     def __init__(self, f_len):
         self.filter_len = 32
-        self.array = BitArray(f_len)
+        self.array = CountingBitArray(f_len)
 
     def hash1(self, str1):
         MULTIPLIER = 17
@@ -49,16 +56,12 @@ class BloomFilter:
         self.array.set(self.hash1(str1))
         self.array.set(self.hash2(str1))
 
+    def remove(self, str1):
+        if not self.is_value(str1):
+            return
+
+        self.array.clear(self.hash1(str1))
+        self.array.clear(self.hash2(str1))
+
     def is_value(self, str1):
         return self.array.get(self.hash1(str1)) and self.array.get(self.hash2(str1))
-
-
-# склейка фильтров блюма значительно увеличит ложные срабатывания
-# не проверяю здесь совпадают ли длины фильтров
-def filters_mash(filters: [BloomFilter]) -> [BloomFilter]:
-    result = BloomFilter(32)
-
-    indices_to_set = [i for i in range(32) for f in filters if f.array.arr[i]]
-
-    for idx in indices_to_set:
-        result.array.arr[idx] = 1
