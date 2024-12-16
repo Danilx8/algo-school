@@ -1,3 +1,6 @@
+from functools import reduce
+
+
 class BitArray:
     def __init__(self, size):
         self.size = size
@@ -59,3 +62,13 @@ class BloomFilter:
     def is_value(self, str1):
         return self.array.get(self.hash1(str1)) and self.array.get(self.hash2(str1))
 
+
+# склейка фильтров блюма значительно увеличит ложные срабатывания
+# не проверяю здесь совпадают ли длины фильтров
+def filters_mash(filters: [BloomFilter]) -> [BloomFilter]:
+    result = BloomFilter(32)
+
+    indices_to_set = [i for i in range(32) for f in filters if f.array.arr[i]]
+
+    for idx in indices_to_set:
+        result.array.arr[idx] = 1
