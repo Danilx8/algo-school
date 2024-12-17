@@ -121,3 +121,17 @@ class LinkedList2:
             self.tail = newNode
         self.head = newNode
         return
+
+    def traverse(self):
+        tmp = None
+        node = self.tail
+
+        while node is not None:
+            tmp = node.next
+            node.next = node.prev
+            node.prev = tmp
+            node = node.next
+
+        if tmp is not None:
+            self.head, self.tail = self.tail, self.head
+
