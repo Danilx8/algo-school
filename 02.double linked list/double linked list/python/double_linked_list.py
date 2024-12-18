@@ -135,3 +135,56 @@ class LinkedList2:
         if tmp is not None:
             self.head, self.tail = self.tail, self.head
 
+    def contains_cycles(self):  # Алгоритм поиска цикла Флойда
+        slow = self.head
+        fast = self.head
+
+        while fast is not None and fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+
+        return False
+
+    def sort(self):
+        if not self.head:
+            return
+
+        current = self.head
+        while current:
+            next_node = current.next
+            while next_node:
+                if current.value > next_node.value:
+                    current.value, next_node.value = next_node.value, current.value
+                next_node = next_node.next
+            current = current.next
+
+        # Update the tail node after sorting
+        current = self.head
+        while current.next:
+            current = current.next
+        self.tail = current
+
+
+def combine(list1: LinkedList2, list2: LinkedList2) -> LinkedList2:
+    result = LinkedList2()
+
+    list1.sort()
+    list2.sort()
+
+    node1 = list1.head
+    node2 = list2.head
+
+    while node1 or node2:
+        curr = None
+        if not node2 or (node1 and node1.value <= node2.value):
+            curr = node1
+            node1 = node1.next
+        else:
+            curr = node2
+            node2 = node2.next
+
+        result.add_in_tail(curr)
+
+    return result
