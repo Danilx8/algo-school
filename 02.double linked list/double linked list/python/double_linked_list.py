@@ -136,16 +136,11 @@ class LinkedList2:
             self.head, self.tail = self.tail, self.head
 
     def contains_cycles(self):  # Алгоритм поиска цикла Флойда
-        slow = self.head
-        fast = self.head
+        node = self.head
+        for _ in range(self.len()):
+            node = node.next
 
-        while fast is not None and fast.next is not None:
-            slow = slow.next
-            fast = fast.next.next
-            if slow == fast:
-                return True
-
-        return False
+        return node != self.tail  # Если после цикла нода сравнялась с хвостом, то циклов нет
 
     def sort(self):
         if not self.head:
