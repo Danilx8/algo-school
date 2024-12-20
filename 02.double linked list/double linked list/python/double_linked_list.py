@@ -135,7 +135,7 @@ class LinkedList2:
         if tmp is not None:
             self.head, self.tail = self.tail, self.head
 
-    def contains_cycles(self):  # Алгоритм поиска цикла Флойда
+    def contains_cycles(self):
         node = self.head
         for _ in range(self.len()):
             node = node.next
@@ -155,7 +155,6 @@ class LinkedList2:
                 next_node = next_node.next
             current = current.next
 
-        # Update the tail node after sorting
         current = self.head
         while current.next:
             current = current.next
