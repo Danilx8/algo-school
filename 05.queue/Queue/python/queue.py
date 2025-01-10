@@ -21,3 +21,11 @@ class Queue:
 
     def size(self):
         return self.headIndex  # размер очереди
+
+    def rotate_queue(self, n):
+        if n > self.size() or n < 0:
+            return
+
+        for _ in range(n):
+            item = self.dequeue()
+            self.enqueue(item)
