@@ -29,3 +29,18 @@ class Deque:
 
     def size(self):
         return len(self.elements)  # размер очереди
+
+    def rotate(self, n):
+        if self.size() == 0:
+            return
+
+        n = n % self.size()
+        if n > 0:
+            for _ in range(n):
+                item = self.removeTail()
+                self.addFront(item)
+        elif n < 0:
+            for _ in range(-n):
+                item = self.removeFront()
+                self.addTail(item)
+
