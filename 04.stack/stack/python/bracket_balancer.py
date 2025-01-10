@@ -5,19 +5,19 @@ def balanced_brackets(brackets):
     stack = Stack()
 
     for char in brackets:
-        stack.push(char)
+        if char in "({[":
+            stack.push(char)
+        elif char in ")}]":
+            if len(stack.stack) == 0 or not is_matching(stack.pop(), char):
+                return False
 
-    if stack.size() % 2 != 0:
-        return False
-
-    return brackets_balancer(stack)
+    return len(stack.stack) == 0
 
 
-def brackets_balancer(stack):
-    while stack.size() > 0:
-        if stack.pop() == '(':
-            return False
-        else:
-            if not brackets_balancer(stack) and stack.size() == 0:
-                return True
-    return False
+def is_matching(opening, closing):
+    matching_pairs = {
+        '(': ')',
+        '{': '}',
+        '[': ']'
+    }
+    return matching_pairs.get(opening) == closing
