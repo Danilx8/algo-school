@@ -29,3 +29,14 @@ class Queue:
         for _ in range(n):
             item = self.dequeue()
             self.enqueue(item)
+
+    def reverse(self):
+        tmp = []
+        while self.size() > 0:
+            item = self.dequeue()
+            tmp.append(item)
+
+        while len(tmp) > 0:
+            item = tmp.pop()
+            self.enqueue(item)
+
