@@ -1,73 +1,66 @@
-package golang
+package main
 
 import (
-	"fmt"
-	"reflect"
+	"errors"
 )
 
 type Node struct {
-	Value interface{}
-	Next  *Node
+	next  *Node
+	value int
 }
 
 type LinkedList struct {
-	Head *Node
-	Tail *Node
+	head *Node
+	tail *Node
 }
 
-func (ll *LinkedList) AddInTail(item *Node) {
-	if ll.Head == nil {
-		ll.Head = item
+func (l *LinkedList) AddInTail(item Node) {
+	if l.head == nil {
+		l.head = &item
 	} else {
-		ll.Tail.Next = item
+		l.tail.next = &item
 	}
-	ll.Tail = item
+
+	l.tail = &item
 }
 
-func (ll *LinkedList) PrintAllNodes() {
-	node := ll.Head
+func (l *LinkedList) Find(n int) (Node, error) {
+	node := l.head
 	for node != nil {
-		fmt.Println(node.Value)
-		node = node.Next
-	}
-}
-
-func (ll *LinkedList) Find(val interface{}) *Node {
-	node := ll.Head
-	for node != nil {
-		if reflect.DeepEqual(node.Value, val) {
-			return node
+		if node.value == n {
+			return *node, nil
 		}
-		node = node.Next
+		node = node.next
 	}
-	return nil
+	return Node{value: -1, next: nil}, errors.New("couldn't find node with such value")
 }
 
-func (ll *LinkedList) FindAll(val interface{}) []*Node {
-	var nodes []*Node
-	node := ll.Head
+func (l *LinkedList) FindAll(n int) []Node {
+	nodes := make([]Node, 0)
+	node := l.head
 	for node != nil {
-		if reflect.DeepEqual(node.Value, val) {
-			nodes = append(nodes, node)
+		if node.value == n {
+			// append a detached copy (next = nil) for predictable equality in tests
+			nodes = append(nodes, Node{value: node.value})
 		}
-		node = node.Next
+		node = node.next
 	}
 	return nodes
 }
 
-func (ll *LinkedList) Delete(val interface{}, all bool) {
-	if ll.Head == nil {
+func (l *LinkedList) Delete(n int, all bool) {
+	if l.head == nil {
 		return
 	}
 
-	node := ll.Head
+	node := l.head
 
 	// Delete from the beginning while head matches
-	for node != nil && reflect.DeepEqual(node.Value, val) {
-		ll.Head = ll.Head.Next
-		node = ll.Head
-		if ll.Head == nil {
-			ll.Tail = nil
+	for node != nil && node.value == n {
+		l.head = l.head.next
+		node = l.head
+		if l.head == nil {
+			l.tail = nil
 		}
 		if !all {
 			return
@@ -76,9 +69,9 @@ func (ll *LinkedList) Delete(val interface{}, all bool) {
 
 	var prev *Node
 	for node != nil {
-		for node != nil && !reflect.DeepEqual(node.Value, val) {
+		for node != nil && node.value != n {
 			prev = node
-			node = node.Next
+			node = node.next
 		}
 
 		if node == nil {
@@ -86,10 +79,10 @@ func (ll *LinkedList) Delete(val interface{}, all bool) {
 		}
 
 		// remove node
-		prev.Next = node.Next
-		node = prev.Next
-		if prev.Next == nil {
-			ll.Tail = prev
+		prev.next = node.next
+		node = prev.next
+		if prev.next == nil {
+			l.tail = prev
 		}
 
 		if !all {
@@ -98,71 +91,77 @@ func (ll *LinkedList) Delete(val interface{}, all bool) {
 	}
 }
 
-// Clean removes all nodes from the list
-func (ll *LinkedList) Clean() {
-	ll.Head = nil
-	ll.Tail = nil
-}
-
-func (ll *LinkedList) Len() int {
+func (l *LinkedList) Count() int {
 	count := 0
-	node := ll.Head
+	node := l.head
 	for node != nil {
 		count++
-		node = node.Next
+		node = node.next
 	}
 	return count
 }
 
-func (ll *LinkedList) Insert(afterNode *Node, newNode *Node) {
-	if afterNode == ll.Tail {
-		ll.AddInTail(newNode)
+func (l *LinkedList) Insert(after *Node, add Node) {
+	if after == l.tail {
+		l.AddInTail(add)
 		return
 	}
 
-	if afterNode == nil {
-		newNode.Next = ll.Head
-		ll.Head = newNode
-		if ll.Tail == nil {
-			ll.Tail = newNode
+	if after == nil {
+		add.next = l.head
+		l.head = &add
+		if l.tail == nil {
+			l.tail = &add
 		}
 		return
 	}
 
-	node := ll.Head
+	node := l.head
 	for node != nil {
-		if node == afterNode {
-			newNode.Next = node.Next
-			node.Next = newNode
-			if node.Next != nil && node.Next.Next == nil {
-				ll.Tail = node.Next
+		if node == after {
+			add.next = node.next
+			node.next = &add
+			if node.next != nil && node.next.next == nil {
+				l.tail = node.next
 			}
 			break
 		}
-		node = node.Next
+		node = node.next
 	}
 }
 
-// Summ returns a new list where each node value is the sum of corresponding
-// nodes of the input lists. If the lists have different lengths, it returns nil.
-// Assumes node values are integers (int); behavior is undefined for other types.
+func (l *LinkedList) InsertFirst(first Node) {
+	if l.head == nil {
+		l.head = &first
+		l.tail = &first
+		return
+	}
+	first.next = l.head
+	l.head = &first
+}
+
+func (l *LinkedList) Clean() {
+	l.head = nil
+	l.tail = nil
+}
+
 func Summ(first, second *LinkedList) *LinkedList {
 	if first == nil || second == nil {
 		return nil
 	}
-	if first.Len() != second.Len() {
+	if first.Count() != second.Count() {
 		return nil
 	}
 
 	result := &LinkedList{}
-	n1 := first.Head
-	n2 := second.Head
+	n1 := first.head
+	n2 := second.head
 	for n1 != nil {
-		v1, _ := n1.Value.(int)
-		v2, _ := n2.Value.(int)
-		result.AddInTail(&Node{Value: v1 + v2})
-		n1 = n1.Next
-		n2 = n2.Next
+		v1 := n1.value
+		v2 := n2.value
+		result.AddInTail(Node{value: v1 + v2})
+		n1 = n1.next
+		n2 = n2.next
 	}
 	return result
 }
