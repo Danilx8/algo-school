@@ -10,7 +10,7 @@ func createList(values ...int) *LinkedList2 {
 	l := &LinkedList2{}
 	for _, v := range values {
 		node := &Node{value: v}
-		l.AddInTail(node)
+		l.AddInTail(*node)
 	}
 	return l
 }
@@ -59,7 +59,7 @@ func TestAddInTail(t *testing.T) {
 	}
 
 	node1 := &Node{value: 1}
-	l.AddInTail(node1)
+	l.AddInTail(*node1)
 	if l.head != node1 || l.tail != node1 {
 		t.Error("after first add")
 	}
@@ -69,7 +69,7 @@ func TestAddInTail(t *testing.T) {
 	checkLinks(t, l)
 
 	node2 := &Node{value: 2}
-	l.AddInTail(node2)
+	l.AddInTail(*node2)
 	if l.head != node1 || l.tail != node2 {
 		t.Error("after second add")
 	}
@@ -113,7 +113,7 @@ func TestFind(t *testing.T) {
 	}
 
 	node, err = l.Find(4)
-	if err == nil || node != nil {
+	if err == nil || &node != nil {
 		t.Error("find missing")
 	}
 	if !errors.Is(err, errors.New("node not found")) {
@@ -224,23 +224,23 @@ func TestDelete(t *testing.T) {
 
 func TestInsert(t *testing.T) {
 	l := createList(1, 3, 4)
-	node2 := &Node{value: 2}
+	node2 := Node{value: 2}
 	after, _ := l.Find(1)
-	l.Insert(after, node2)
+	l.Insert(&after, node2)
 	checkLinks(t, l)
 	if !equal(listToValues(l), []int{1, 2, 3, 4}) {
 		t.Error("insert middle")
 	}
 
-	node5 := &Node{value: 5}
+	node5 := Node{value: 5}
 	after, _ = l.Find(4)
-	l.Insert(after, node5)
+	l.Insert(&after, node5)
 	checkLinks(t, l)
 	if !equal(listToValues(l), []int{1, 2, 3, 4, 5}) {
 		t.Error("insert tail")
 	}
 
-	node0 := &Node{value: 0}
+	node0 := Node{value: 0}
 	l.Insert(nil, node0) // like InsertFirst
 	checkLinks(t, l)
 	if !equal(listToValues(l), []int{0, 1, 2, 3, 4, 5}) {
@@ -248,7 +248,7 @@ func TestInsert(t *testing.T) {
 	}
 
 	l = &LinkedList2{}
-	node1 := &Node{value: 1}
+	node1 := Node{value: 1}
 	l.Insert(nil, node1)
 	checkLinks(t, l)
 	if !equal(listToValues(l), []int{1}) {
@@ -257,8 +257,8 @@ func TestInsert(t *testing.T) {
 
 	// Insert after non-existing
 	l = createList(1, 2)
-	fake := &Node{value: 100}
-	l.Insert(fake, &Node{value: 3}) // should do nothing
+	fake := Node{value: 100}
+	l.Insert(&fake, Node{value: 3}) // should do nothing
 	if !equal(listToValues(l), []int{1, 2}) {
 		t.Error("insert after missing")
 	}
@@ -266,7 +266,7 @@ func TestInsert(t *testing.T) {
 
 func TestInsertFirst(t *testing.T) {
 	l := createList(2, 3)
-	node1 := &Node{value: 1}
+	node1 := Node{value: 1}
 	l.InsertFirst(node1)
 	checkLinks(t, l)
 	if !equal(listToValues(l), []int{1, 2, 3}) {
@@ -274,7 +274,7 @@ func TestInsertFirst(t *testing.T) {
 	}
 
 	l = &LinkedList2{}
-	node1 = &Node{value: 1}
+	node1 = Node{value: 1}
 	l.InsertFirst(node1)
 	checkLinks(t, l)
 	if !equal(listToValues(l), []int{1}) {
