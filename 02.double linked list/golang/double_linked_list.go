@@ -17,17 +17,17 @@ type LinkedList2 struct {
 	tail *Node
 }
 
-func (l *LinkedList2) AddInTail(item *Node) {
+func (l *LinkedList2) AddInTail(item Node) {
 	if l.head == nil {
-		l.head = item
+		l.head = &item
 		l.head.next = nil
 		l.head.prev = nil
 	} else {
-		l.tail.next = item
+		l.tail.next = &item
 		item.prev = l.tail
 		item.next = nil
 	}
-	l.tail = item
+	l.tail = &item
 }
 
 func (l *LinkedList2) Count() int {
@@ -41,23 +41,23 @@ func (l *LinkedList2) Count() int {
 }
 
 // error не nil, если узел не найден
-func (l *LinkedList2) Find(n int) (*Node, error) {
+func (l *LinkedList2) Find(n int) (Node, error) {
 	node := l.head
 	for node != nil {
 		if node.value == n {
-			return node, nil
+			return *node, nil
 		}
 		node = node.next
 	}
-	return nil, errors.New("node not found")
+	return Node{value: -1, next: nil}, errors.New("node not found")
 }
 
-func (l *LinkedList2) FindAll(n int) []*Node {
-	var nodes []*Node
+func (l *LinkedList2) FindAll(n int) []Node {
+	var nodes []Node
 	node := l.head
 	for node != nil {
 		if node.value == n {
-			nodes = append(nodes, node)
+			nodes = append(nodes, *node)
 		}
 		node = node.next
 	}
@@ -121,16 +121,16 @@ func (l *LinkedList2) Delete(n int, all bool) {
 	}
 }
 
-func (l *LinkedList2) Insert(after *Node, add *Node) {
+func (l *LinkedList2) Insert(after *Node, add Node) {
 	if after == nil {
 		add.next = l.head
 		add.prev = nil
 		if l.head != nil {
-			l.head.prev = add
+			l.head.prev = &add
 		} else {
-			l.tail = add
+			l.tail = &add
 		}
-		l.head = add
+		l.head = &add
 		return
 	}
 	node := l.head
@@ -139,18 +139,18 @@ func (l *LinkedList2) Insert(after *Node, add *Node) {
 			add.next = node.next
 			add.prev = node
 			if node.next != nil {
-				node.next.prev = add
+				node.next.prev = &add
 			} else {
-				l.tail = add
+				l.tail = &add
 			}
-			node.next = add
+			node.next = &add
 			return
 		}
 		node = node.next
 	}
 }
 
-func (l *LinkedList2) InsertFirst(first *Node) {
+func (l *LinkedList2) InsertFirst(first Node) {
 	l.Insert(nil, first)
 }
 
