@@ -1,7 +1,8 @@
-package dynarray
+package main
 
 import (
 	"fmt"
+	"os"
 )
 
 type DynArray[T any] struct {
