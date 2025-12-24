@@ -68,7 +68,7 @@ func (da *DynArray[T]) Remove(index int) error {
 	}
 
 	if da.count < da.capacity/2 && da.capacity > 16 {
-		newCap := int(math.Round(float64(da.capacity) / 1.5))
+		newCap := int(float64(da.capacity) / 1.5)
 		if newCap < 16 {
 			newCap = 16
 		}
