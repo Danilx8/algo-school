@@ -21,12 +21,8 @@ func (da *DynArray[T]) MakeArray(newCapacity int) {
 	if newCapacity < 16 {
 		newCapacity = 16
 	}
-
 	newArray := make([]T, newCapacity)
-
-	// Копируем все существующие элементы (но не больше, чем есть)
-	copy(newArray, da.array)
-
+	copy(newArray, da.array[:da.count]) // Копируем только реальные элементы до count, остальное будет zero value
 	da.array = newArray
 	da.capacity = newCapacity
 }
@@ -67,6 +63,9 @@ func (da *DynArray[T]) Remove(index int) error {
 	}
 
 	da.count--
+	for j := da.count; j < da.capacity; j++ {
+		da.array[j] = *new(T)
+	}
 
 	if da.count < da.capacity/2 && da.capacity > 16 {
 		newCap := int(math.Round(float64(da.capacity) / 1.5))
