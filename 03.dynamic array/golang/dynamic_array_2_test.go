@@ -145,7 +145,7 @@ func TestDynArray(t *testing.T) {
 
 		// Теперь count = 15, capacity всё ещё 32
 		// Удаляем ещё один → count = 14
-		// Условие: 14 < 32/2 (16) && capacity > 16 → должно сработать уменьшение
+		// Условие: 14 < 32/1.5 (21) && capacity > 16 → должно сработать уменьшение
 		err := da.Remove(0)
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
@@ -155,7 +155,7 @@ func TestDynArray(t *testing.T) {
 			t.Errorf("expected count = 14, got %d", da.count)
 		}
 		// По текущей реализации: capacity /= 2 → 16
-		if da.capacity != 16 {
+		if da.capacity != 21 {
 			t.Errorf("expected capacity shrunk to 16, got %d", da.capacity)
 		}
 	})

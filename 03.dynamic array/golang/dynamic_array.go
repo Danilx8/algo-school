@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"os"
 )
 
@@ -60,22 +61,19 @@ func (da *DynArray[T]) Remove(index int) error {
 		return fmt.Errorf("bad index '%d'", index)
 	}
 
-	tmpArray := make([]T, da.capacity)
-	for j := 0; j < index; j++ {
-		tmpArray[j] = da.array[j]
+	// Сдвигаем элементы влево
+	for i := index; i < da.count-1; i++ {
+		da.array[i] = da.array[i+1]
 	}
-	for k := index + 1; k < da.count; k++ {
-		tmpArray[k-1] = da.array[k]
-	}
-	da.array = tmpArray
+
 	da.count--
 
 	if da.count < da.capacity/2 && da.capacity > 16 {
-		if float64(da.capacity)/1.5 >= 16 {
-			da.MakeArray(da.capacity / 2)
-		} else {
-			da.MakeArray(16)
+		newCap := int(math.Round(float64(da.capacity) / 1.5))
+		if newCap < 16 {
+			newCap = 16
 		}
+		da.MakeArray(newCap)
 	}
 
 	return nil
