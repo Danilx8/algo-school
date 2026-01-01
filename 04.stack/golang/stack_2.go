@@ -238,7 +238,7 @@ func StacksCalculations(expression string) (int, error) {
 }
 
 // Пример использования
-func main() {
+func calculate() {
 	tests := []string{
 		"8 2 + 5 * 9 + =",
 	}
